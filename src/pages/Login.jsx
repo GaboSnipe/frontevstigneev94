@@ -40,7 +40,7 @@ const Login = () => {
   const proceedLogin = (e) => {
     e.preventDefault();
     if (isValidate()) {
-      fetch("http://localhost:8080/auth/login", {
+      fetch("https://backendevstigneev94.vercel.app//auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
