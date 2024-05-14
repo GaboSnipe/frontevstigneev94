@@ -88,7 +88,7 @@ const Shop = () => {
                 key={nanoid()}
                 id={product._id}
                 title={product.name}
-                image={`https://backendevstigneev94.vercel.app${product.imageUrl}`}
+                image={`https://raw.githubusercontent.com/GaboSnipe/backendevstigneev94/main${product.imageUrl}`}
                 rating={product.rating}
                 price={product.price}
                 brandName={product.brandName}

@@ -34,7 +34,7 @@ const Landing = () => {
                 key={product._id}
                 id={product._id}
                 title={product.name}
-                image={`https://backendevstigneev94.vercel.app${product.imageUrl}`}
+                image={`https://raw.githubusercontent.com/GaboSnipe/backendevstigneev94/main${product.imageUrl}`}
                 price={product.price}
               />
             ))}
