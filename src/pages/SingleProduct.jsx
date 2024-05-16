@@ -229,7 +229,7 @@ let averageRating = sumOfRatings / ratings.length;
                   : "badge bg-gray-700 badge-lg font-bold text-white p-5 mt-2"
               }
             >
-              наличие в складе : {productData?.isInStock ? "Yes" : "No"}
+              наличие в складе : {productData?.isInStock ? "да" : "нет"}
             </div>
             <div className="badge bg-gray-700 badge-lg font-bold text-white p-5 mt-2">
               код продукта: {productData?.productCode}
