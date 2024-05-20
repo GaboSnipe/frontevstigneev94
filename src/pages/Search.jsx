@@ -10,11 +10,11 @@ const Search = () => {
 
   const handleSearch = async (e) => {
     e.preventDefault();
-    setSearchTerm(e.target.search.value);
+    setSearchTerm(prevState => e.target.search.value);
     setCurrentPage(1); // Сбросить текущую страницу при новом поиске
     try {
       const response = await axios(
-        `/products?q=${e.target.search.value}&_page=1`
+        `/products?q=${e.target.search.value}&_page=${CurrentPage}`
       );
       const data = response.data;
       setProducts(data);
