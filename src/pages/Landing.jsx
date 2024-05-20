@@ -6,11 +6,12 @@ import axios from "../axios";
 
 export const landingLoader = async () => {
   try {
-    const response = await axios(`/products?_page=1&_limit=4`);
+    const response = await axios.get('/products?_page=1&_limit=4');
     const data = response.data;
     return { products: data };
   } catch (error) {
     console.error("Ошибка получения товаров:", error);
+    return { products: [] }; // Возвращаем пустой массив в случае ошибки
   }
 };
 
