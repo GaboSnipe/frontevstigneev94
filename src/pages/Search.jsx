@@ -10,11 +10,11 @@ const Search = () => {
 
   const handleSearch = async (e) => {
     e.preventDefault();
-    setCurrentPage(prevState => 1);
-    setSearchTerm(prevState => e.target.search.value);
+    setSearchTerm(e.target.search.value);
+    setCurrentPage(1); // Сбросить текущую страницу при новом поиске
     try {
       const response = await axios(
-        `/products?q=${e.target.search.value}&_page=${currentPage}`
+        `/products?q=${e.target.search.value}&_page=1`
       );
       const data = response.data;
       setProducts(data);
@@ -37,7 +37,6 @@ const Search = () => {
 
   return (
     <>
-
       <form
         className="form-control max-w-7xl mx-auto py-10 px-10"
         onSubmit={handleSearch}
@@ -70,8 +69,8 @@ const Search = () => {
           </button>
         </div>
       </form>
-      {searchTerm && products.length !== 0 && <h2 className="text-center text-6xl my-10 max-lg:text-4xl max-sm:text-2xl max-sm:my-5 text-accent-content">поиск результата по запросу "{searchTerm}"</h2>}
-      {products.length === 0 && searchTerm && <h2 className="text-center text-6xl my-10 max-lg:text-4xl max-sm:text-2xl max-sm:my-5 text-accent-content">ничего не найдено по запросу "{searchTerm}"</h2>}
+      {searchTerm && <h2 className="text-center text-6xl my-10 max-lg:text-4xl max-sm:text-2xl max-sm:my-5 text-accent-content">поиск результата по запросу "{searchTerm}"</h2>}
+      {searchTerm && products.length === 0 && <h2 className="text-center text-6xl my-10 max-lg:text-4xl max-sm:text-2xl max-sm:my-5 text-accent-content">ничего не найдено по запросу "{searchTerm}"</h2>}
       <div className="grid grid-cols-4 px-2 max-w-7xl mx-auto gap-y-4 max-lg:grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1 shop-products-grid">
         {products && Array.isArray(products) &&
           products.map((product) => (
@@ -85,8 +84,6 @@ const Search = () => {
               brandName={product.brandName}
             />
           ))}
-
-
       </div>
       <SearchPagination
         currentPage={currentPage}
