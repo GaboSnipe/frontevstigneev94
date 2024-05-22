@@ -15,7 +15,7 @@ const CartItem = ({ cartItem }) => {
     >
       {/* IMAGE */}
       <img
-        src={image}
+        src={`https://raw.githubusercontent.com/GaboSnipe/backendevstigneev94/main${image}`}
         alt={title}
         className="h-24 w-24 rounded-lg sm:h-32 sm:w-32 object-cover"
       />
@@ -35,7 +35,7 @@ const CartItem = ({ cartItem }) => {
         {/* AMOUNT */}
         <div className="form-control max-w-xs">
           <label htmlFor="amount" className="label p-0">
-            <span className="label-text text-accent-content">Amount</span>
+            <span className="label-text text-accent-content">количество</span>
           </label>
           <input
             name="number"

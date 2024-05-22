@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+
 import { FaHeartCrack } from "react-icons/fa6";
 import { useDispatch } from "react-redux";
 import { removeFromWishlist } from "../features/wishlist/wishlistSlice";
@@ -8,34 +9,44 @@ import { toast } from "react-toastify";
 
 
 const WishItem = ({ item, counter }) => {
-    const dispatch = useDispatch();
+const dispatch = useDispatch();
+const [userObj, setuserObj] = useState(null);
+const [pd, setpd] = useState(0);
 
-    const removeFromWishlistHandler = async (product) => {
-      const getResponse = await axios.get(
-        `/user/${localStorage.getItem("id")}`
-      );
-      const userObj = getResponse.data;
-  
-      userObj.userWishlist = userObj.userWishlist || [];
-  
-      const newWishlist = userObj.userWishlist.filter(item => product.id !== item.id);
-  
-      userObj.userWishlist = newWishlist;
-  
-      const postResponse = await axios.put(
-        `/user/${localStorage.getItem("id")}`,
-        userObj
-      );
-  
-      // Dispatch the addToWishlist action with the product data
-      store.dispatch(removeFromWishlist({ userObj }));
-  
+useEffect(() => {
+  axios.get('/auth/me')
+    .then(response => {
+      setuserObj(response.data);
+    })
+    .catch(error => {
+      console.error('Ошибка при получении данных:', error);
+    });
+}, []);
+axios.get(`/products/${item}`)
+  .then(response => {
+    setpd(response.data);
+  })
+  .catch(error => {
+    console.error('Ошибка при запросе данных продукта:', error);
+  });
+  const removeFromWishlistHandler = async (product) => {
+    try {
+      await axios.put(`/users/${userObj._id}/wishlist/remove`, { item: product });
+      const updatedUserObj = await axios.get(`/auth/me`);
+      store.dispatch(removeFromWishlist({ userObj: updatedUserObj.data }));
+      toast.success('Элемент удален из списка желаний');
+    } catch (error) {
+      console.error('Ошибка при удалении элемента из списка желаний:', error);
+      toast.error('Произошла ошибка при удалении элемента из списка желаний');
     }
+  };
   return (
     <tr className="hover cursor-pointer">
       <th className="text-accent-content">{ counter + 1 }</th>
-      <td className="text-accent-content">{ item.title }</td>
-      <td className="text-accent-content">{ item.selectedSize }</td>
+      <td className="imgaad mx-auto max-w-7xl">
+        <img src={`https://raw.githubusercontent.com/GaboSnipe/backendevstigneev94/main${pd.imageUrl}`} alt={pd.name} />
+      </td>
+      <td className="text-accent-content">{ pd.name }</td>
       <td>
         <button className="btn btn-xs btn-error text-sm" onClick={() => removeFromWishlistHandler(item)}>
           <FaHeartCrack />

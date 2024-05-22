@@ -51,7 +51,6 @@ const cartSlice = createSlice({
     }
 })
 
-// console.log(cartSlice);
 export const { clearCart, removeItem, updateCartAmount, decrease, calculateTotals, addToCart } = cartSlice.actions;
 
 export default cartSlice.reducer;

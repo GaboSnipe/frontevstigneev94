@@ -6,6 +6,12 @@
     column-gap: 10px;
     row-gap: 10px;
 }
+.imgaad{
+    display: grid;
+    width: 18vh;
+    column-gap: 10px;
+    row-gap: 10px;
+}
 
 @media(max-width: 1200px){
     .selected-products-grid{

@@ -40,7 +40,7 @@ const Login = () => {
   const proceedLogin = (e) => {
     e.preventDefault();
     if (isValidate()) {
-      fetch("https://backendevstigneev94.vercel.app/auth/login", {
+      fetch("http://localhost:8080/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -58,7 +58,7 @@ const Login = () => {
               throw new Error(data.message);
             });
           } else {
-            throw new Error("Failed to login. Please try again later.");
+            throw new Error("не удалось залогинится");
           }
         }
         return res.json();

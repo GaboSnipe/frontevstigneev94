@@ -17,15 +17,42 @@ const wishlistSlice = createSlice({
       state.wishItems = [];
     },
     removeFromWishlist: (state, action) => {
-      
-      state.wishItems = action.payload.userObj.userWishlist;
-      toast.error("товар удален из списка желаный");
+      try {
+        const userObj = action.payload?.userObj;
+
+    
+        if (!userObj || !userObj.userWishlist) {
+          console.error('removeFromWishlist - userObj or userObj.userWishlist is undefined');
+          return;
+        }
+    
+        const list = userObj.userWishlist;
+        state.wishItems = list;
+      } catch (error) {
+        console.error('removeFromWishlist - Error:', error);
+      }
     },
+    
     updateWishlist: (state, action) => {
-
-      state.wishItems = action.payload.userObj.userWishlist;
-
+      try {
+        const userObj = action.payload?.userObj;
+    
+        if (!userObj || !userObj.userWishlist) {
+          console.error('updateWishlist - userObj or userObj.userWishlist is undefined');
+          return;
+        }
+    
+        const list = userObj.userWishlist;
+        state.wishItems = list;
+      } catch (error) {
+        console.error('updateWishlist - Error:', error);
+      }
     },
+    
+    
+    
+    
+    
     calculateWishlistAmount: (state) => {
       let amount = 0;
       state.wishItems.forEach((item) => {
@@ -36,7 +63,6 @@ const wishlistSlice = createSlice({
   },
 });
 
-// console.log(cartSlice);
 export const {
   clearWishlist,
   removeFromWishlist,

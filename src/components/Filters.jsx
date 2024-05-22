@@ -9,7 +9,7 @@ import FormCheckbox from "./FormCheckbox";
 const Filters = () => {
   const [selectCategoryList, setSelectCategoryList] = useState([
     "все",
-    "холодильник",
+    "Холодильник",
     
   ]);
   const [selectBrandList, setSelectBrandList] = useState([
@@ -53,7 +53,7 @@ const Filters = () => {
       {/* In stock */}
       <FormCheckbox
         label="только продукт в наличии"
-        name="stock"
+        name="isInStock"
         defaultValue="false"
       />
 

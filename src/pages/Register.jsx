@@ -64,7 +64,7 @@ const Register = () => {
     };
 
     if (isValidate()) {
-      fetch(`https://backendevstigneev94.vercel.app/auth/register`, {
+      fetch(`http://localhost:8080/auth/register`, {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify(regObj),

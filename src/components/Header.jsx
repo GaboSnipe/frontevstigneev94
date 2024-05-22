@@ -24,7 +24,6 @@ const Header = () => {
   const [id, setId] = useState(localStorage.getItem("id"));
   const dispatch = useDispatch();
   const { darkMode } = useSelector((state) => state.auth);
-
   const loginState = useSelector((state) => state.auth.isLoggedIn);
 
 
@@ -34,10 +33,7 @@ const Header = () => {
       try {
         const getResponse = await axios.get(`/auth/me`);
         const userObj = getResponse.data;
-  
         store.dispatch(updateWishlist({userObj}));
-        
-       
       } catch (error) {
         console.error(error);
       }

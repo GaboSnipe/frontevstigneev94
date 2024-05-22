@@ -1,5 +1,5 @@
 import axios from "../axios";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   QuantityInput,
   SelectSize,
@@ -8,7 +8,6 @@ import {
 } from "../components";
 import { FaHeart } from "react-icons/fa6";
 import { FaCartShopping } from "react-icons/fa6";
-
 import { Link, useLoaderData } from "react-router-dom";
 import parse from "html-react-parser";
 import { nanoid } from "nanoid";
@@ -23,9 +22,7 @@ import { store } from "../store";
 
 export const singleProductLoader = async ({ params }) => {
   const { id } = params;
-
   const response = await axios(`/products/${id}`);
-
   return { productData: response.data };
 };
 
@@ -34,6 +31,7 @@ const SingleProduct = () => {
   const [quantity, setQuantity] = useState(1);
   const [size, setSize] = useState(0);
   const { wishItems } = useSelector((state) => state.wishlist);
+  const [userObj, setuserObj] = useState(null);
 
   const dispatch = useDispatch();
   const loginState = useSelector((state) => state.auth.isLoggedIn);
@@ -47,76 +45,84 @@ const SingleProduct = () => {
 
   const { productData } = useLoaderData();
 
+  useEffect(() => {
+    axios.get('/auth/me')
+      .then(response => {
+        setuserObj(response.data);
+      })
+      .catch(error => {
+        console.error('Ошибка при получении данных:', error);
+      });
+  }, []);
+  
+
   const product = {
-    id: productData?.id + size,
+    id: productData?._id + size,
     title: productData?.name,
     image: productData?.imageUrl,
     price: productData?.price,
     brandName: productData?.brandName,
     amount: quantity,
     selectedSize: size || productData?.availableSizes[0],
-    isInWishList:
-      wishItems.find((item) => item.id === productData?.id + size) !==
-      undefined,
+    isInWishList: wishItems.includes(productData?._id),
   };
+
 
   for (let i = 0; i < productData?.rating; i++) {
     rating[i] = "full star";
   }
 
   let ratings = [];
-if (productData.reviews && productData.reviews.length > 0) {
-    productData.reviews.forEach(review => {
-        ratings.push(review.rating);
+  if (productData.reviews && productData.reviews.length > 0) {
+    productData.reviews.forEach((review) => {
+      ratings.push(review.rating);
     });
-} else {
+  } else {
     ratings.push(0);
-}
-let sumOfRatings = ratings.reduce((total, rating) => total + rating, 0);
-let averageRating = sumOfRatings / ratings.length;
+  }
+  let sumOfRatings = ratings.reduce((total, rating) => total + rating, 0);
+  let averageRating = sumOfRatings / ratings.length;
+
   const addToWishlistHandler = async (product) => {
     try {
-      const getResponse = await axios.get(
-        `/auth/me}`
-      );
-      const userObj = getResponse.data;
-
-      
-      userObj.userWishlist = userObj.userWishlist || [];
-
-      userObj.userWishlist.push(product);
-
-      const postResponse = await axios.put(
-        `/user/${id}`,
-        userObj
-      );
-
-      
-      store.dispatch(updateWishlist({ userObj }));
+      await axios.post(`/users/${userObj._id}/wishlist`, { item: productData._id });
+      // Получите обновленный объект пользователя
+      const updatedUserObj = await axios.get(`/auth/me`);
+      store.dispatch(updateWishlist({ userObj: updatedUserObj.data }));
+      toast.success('Элемент добавлен в список желаний');
     } catch (error) {
-      console.error(error);
+      console.log(error);
+      toast.error('Произошла ошибка при добавлении элемента в список желаний');
     }
   };
-
+  
   const removeFromWishlistHandler = async (product) => {
-    const getResponse = await axios.get(
-      `/auth/me`
-    );
-    const userObj = getResponse.data;
-
-    userObj.userWishlist = userObj.userWishlist || [];
-
-    const newWishlist = userObj.userWishlist.filter(
-      (item) => product.id !== item._id
-    );
-
-    userObj.userWishlist = newWishlist;
-
-    const postResponse = await axios.put(`/user/${id}`,userObj);
-
-    
-    store.dispatch(removeFromWishlist({ userObj }));
+    try {
+      await axios.put(`/users/${userObj._id}/wishlist/remove`, { item: productData._id });
+      // Получите обновленный объект пользователя
+      const updatedUserObj = await axios.get(`/auth/me`);
+      store.dispatch(removeFromWishlist({ userObj: updatedUserObj.data }));
+      toast.success('Элемент удален из списка желаний');
+    } catch (error) {
+      console.error('Ошибка при удалении элемента из списка желаний:', error);
+      toast.error('Произошла ошибка при удалении элемента из списка желаний');
+    }
   };
+  const addToCartHandler = async (product) => {
+    try {
+      await axios.post(`/users/${userObj._id}/wishlist`, { item: productData._id });
+      // Получите обновленный объект пользователя
+      const updatedUserObj = await axios.get(`/auth/me`);
+      store.dispatch(updateWishlist({ userObj: updatedUserObj.data }));
+      toast.success('Элемент добавлен в список желаний');
+    } catch (error) {
+      console.log(error);
+      toast.error('Произошла ошибка при добавлении элемента в список желаний');
+    }
+  };
+  
+  
+  
 
   return (
     <>
@@ -144,25 +150,15 @@ let averageRating = sumOfRatings / ratings.length;
             {productData?.name}
           </h2>
           <SingleProductRating rating={ratings} productData={productData} />
-          <p className="text-3xl text-error">
-            ₽{productData?.price}
-          </p>
+          <p className="text-3xl text-error">₽{productData?.price}</p>
           <div className="text-xl max-sm:text-lg text-accent-content">
             {parse(productData?.description)}
           </div>
           <div className="text-2xl">
-            <SelectSize
-              sizeList={productData?.availableSizes}
-              size={size}
-              setSize={setSize}
-            />
+            <SelectSize sizeList={productData?.availableSizes} size={size} setSize={setSize} />
           </div>
           <div>
-            <label htmlFor="Quantity" className="sr-only">
-              {" "}
-              Quantity{" "}
-            </label>
-
+            <label htmlFor="Quantity" className="sr-only">Количество</label>
             <div className="flex items-center gap-1">
               <QuantityInput quantity={quantity} setQuantity={setQuantity} />
             </div>
@@ -172,11 +168,10 @@ let averageRating = sumOfRatings / ratings.length;
               className="btn bg-blue-600 hover:bg-blue-500 text-white"
               onClick={() => {
                 if (loginState) {
+                  
                   dispatch(addToCart(product));
                 } else {
-                  toast.error(
-                    "вы должны быть залогинени"
-                  );
+                  toast.error("вы должны быть залогинени");
                 }
               }}
             >
@@ -184,16 +179,14 @@ let averageRating = sumOfRatings / ratings.length;
               добавить в корзину
             </button>
 
-            {product?.isInWishList ? (
+            {product.isInWishList ? (
               <button
                 className="btn bg-blue-600 hover:bg-blue-500 text-white"
                 onClick={() => {
                   if (loginState) {
                     removeFromWishlistHandler(product);
                   } else {
-                    toast.error(
-                      "вы должны быть залогинени"
-                    );
+                    toast.error("вы должны быть залогинени");
                   }
                 }}
               >
@@ -207,9 +200,7 @@ let averageRating = sumOfRatings / ratings.length;
                   if (loginState) {
                     addToWishlistHandler(product);
                   } else {
-                    toast.error(
-                      "вы должны быть залогинени"
-                    );
+                    toast.error("вы должны быть залогинени");
                   }
                 }}
               >
@@ -238,13 +229,11 @@ let averageRating = sumOfRatings / ratings.length;
               категория: {productData?.category}
             </div>
             <div className="badge bg-gray-700 badge-lg font-bold text-white p-5 mt-2">
-              дата производство:{" "}
-              {productData?.productionDate?.substring(0, 10)}
+              дата производство: {productData?.productionDate?.substring(0, 10)}
             </div>
           </div>
         </div>
       </div>
-
       <SingleProductReviews rating={ratings} productData={productData} />
     </>
   );

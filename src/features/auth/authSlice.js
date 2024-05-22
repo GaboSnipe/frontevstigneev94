@@ -4,7 +4,8 @@ import { toast } from "react-toastify";
 const initialState = {
   userId: localStorage.getItem('token') || false,
   isLoggedIn: localStorage.getItem('token') ? true : false,
-  darkMode: true
+  userData: null,
+  darkMode: localStorage.getItem('darkMode')
 };
 
 const authSlice = createSlice({
@@ -21,16 +22,18 @@ const authSlice = createSlice({
     },
     changeMode: (state) => {
       state.darkMode = !state.darkMode;
-      if(state.darkMode){
+      const currentMode = localStorage.getItem("darkMode") === "true";
+      const newMode = !currentMode;
+      localStorage.setItem("darkMode", newMode);
+      if (newMode) {
         document.querySelector('html').setAttribute('data-theme', "dark");
-      }else{
+      } else {
         document.querySelector('html').setAttribute('data-theme', "light");
       }
     }
   },
 });
 
-// console.log(cartSlice);
-export const { loginUser, logoutUser, changeMode } = authSlice.actions;
+export const { loginUser, logoutUser, getUserData, changeMode } = authSlice.actions;
 
 export default authSlice.reducer;

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
@@ -9,5 +9,13 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+    <script>
+      function setThemeFromLocalStorage() {
+        const darkMode = localStorage.getItem('darkMode') === 'true';
+        const theme = darkMode ? 'dark' : 'light';
+        document.querySelector('html').setAttribute('data-theme', theme);
+      }
+      setThemeFromLocalStorage();
+    </script>
   </body>
 </html>
