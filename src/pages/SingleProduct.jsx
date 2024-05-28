@@ -6,13 +6,12 @@ import {
   SingleProductRating,
   SingleProductReviews,
 } from "../components";
-import { FaHeart } from "react-icons/fa6";
-import { FaCartShopping } from "react-icons/fa6";
+import { FaHeart, FaCartShopping } from "react-icons/fa6";
 import { Link, useLoaderData } from "react-router-dom";
 import parse from "html-react-parser";
 import { nanoid } from "nanoid";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart } from "../features/cart/cartSlice";
+import { addToCart, updateCartAmount } from "../features/cart/cartSlice";
 import {
   updateWishlist,
   removeFromWishlist,
@@ -53,8 +52,21 @@ const SingleProduct = () => {
       .catch(error => {
         console.error('Ошибка при получении данных:', error);
       });
-  }, []);
-  
+
+    // Calculate the average rating
+    let sumOfRatings = 0;
+    if (productData.reviews && productData.reviews.length > 0) {
+      sumOfRatings = productData.reviews.reduce((total, review) => total + review.rating, 0);
+    }
+    const averageRating = sumOfRatings / productData.reviews.length;
+    
+    // Set the rating stars
+    const newRating = Array.from({ length: 5 }, (_, index) => 
+      index < Math.round(averageRating) ? "full star" : "empty star"
+    );
+    setRating(newRating);
+
+  }, [productData.reviews]);
 
   const product = {
     id: productData?._id + size,
@@ -67,26 +79,9 @@ const SingleProduct = () => {
     isInWishList: wishItems.includes(productData?._id),
   };
 
-
-  for (let i = 0; i < productData?.rating; i++) {
-    rating[i] = "full star";
-  }
-
-  let ratings = [];
-  if (productData.reviews && productData.reviews.length > 0) {
-    productData.reviews.forEach((review) => {
-      ratings.push(review.rating);
-    });
-  } else {
-    ratings.push(0);
-  }
-  let sumOfRatings = ratings.reduce((total, rating) => total + rating, 0);
-  let averageRating = sumOfRatings / ratings.length;
-
   const addToWishlistHandler = async (product) => {
     try {
       await axios.post(`/users/${userObj._id}/wishlist`, { item: productData._id });
-      // Получите обновленный объект пользователя
       const updatedUserObj = await axios.get(`/auth/me`);
       store.dispatch(updateWishlist({ userObj: updatedUserObj.data }));
       toast.success('Элемент добавлен в список желаний');
@@ -99,7 +94,6 @@ const SingleProduct = () => {
   const removeFromWishlistHandler = async (product) => {
     try {
       await axios.put(`/users/${userObj._id}/wishlist/remove`, { item: productData._id });
-      // Получите обновленный объект пользователя
       const updatedUserObj = await axios.get(`/auth/me`);
       store.dispatch(removeFromWishlist({ userObj: updatedUserObj.data }));
       toast.success('Элемент удален из списка желаний');
@@ -108,35 +102,37 @@ const SingleProduct = () => {
       toast.error('Произошла ошибка при удалении элемента из списка желаний');
     }
   };
+
   const addToCartHandler = async (product) => {
     try {
-      await axios.post(`/users/${userObj._id}/wishlist`, { item: productData._id });
-      // Получите обновленный объект пользователя
+      await axios.post(`/users/${userObj._id}/cart`, { item: product });
       const updatedUserObj = await axios.get(`/auth/me`);
-      store.dispatch(updateWishlist({ userObj: updatedUserObj.data }));
-      toast.success('Элемент добавлен в список желаний');
+      store.dispatch(addToCart( product ));
+      toast.success('товар добавлен в корзину');
     } catch (error) {
       console.log(error);
-      toast.error('Произошла ошибка при добавлении элемента в список желаний');
+      toast.error('Произошла ошибка при добавлении элемента в корзину');
     }
   };
-  
-  
-  
 
+  const [isExpanded, setIsExpanded] = useState(false);
+  
+  const toggleExpand = () => {
+    setIsExpanded(!isExpanded);
+  };
   return (
     <>
       <div className="grid grid-cols-2 max-w-7xl mx-auto mt-5 max-lg:grid-cols-1 max-lg:mx-5">
         <div className="product-images flex flex-col justify-center max-lg:justify-start">
           <img
-            src={`https://raw.githubusercontent.com/GaboSnipe/backendevstigneev94/main/${productData?.additionalImageUrls[currentImage]}`}
+            src={`${process.env.REACT_APP_API_URL}${productData?.additionalImageUrls[currentImage]}`}
             className="w-96 text-center border border-gray-600 cursor-pointer"
             alt={productData.name}
           />
           <div className="other-product-images mt-1 grid grid-cols-3 w-96 gap-y-1 gap-x-2 max-sm:grid-cols-2 max-sm:w-64">
             {productData?.additionalImageUrls.map((imageObj, index) => (
               <img
-                src={`https://raw.githubusercontent.com/GaboSnipe/backendevstigneev94/main${imageObj}`}
+                src={`${process.env.REACT_APP_API_URL}${imageObj}`}
                 key={nanoid()}
                 onClick={() => setCurrentImage(index)}
                 alt={productData.name}
@@ -149,10 +145,15 @@ const SingleProduct = () => {
           <h2 className="text-5xl max-sm:text-3xl text-accent-content">
             {productData?.name}
           </h2>
-          <SingleProductRating rating={ratings} productData={productData} />
+          <SingleProductRating rating={rating} productData={productData} />
           <p className="text-3xl text-error">₽{productData?.price}</p>
-          <div className="text-xl max-sm:text-lg text-accent-content">
-            {parse(productData?.description)}
+          <div className="expandable-text">
+            <p className={isExpanded ? 'expanded' : 'collapsed'}>
+              {isExpanded ? productData?.description : `${productData?.description.substring(0, 200)}...`}
+            </p>
+            <button className="toggle-button" onClick={toggleExpand}>
+              {isExpanded ? 'показать больше' : 'показать меньше'}
+            </button>
           </div>
           <div className="text-2xl">
             <SelectSize sizeList={productData?.availableSizes} size={size} setSize={setSize} />
@@ -168,8 +169,7 @@ const SingleProduct = () => {
               className="btn bg-blue-600 hover:bg-blue-500 text-white"
               onClick={() => {
                 if (loginState) {
-                  
-                  dispatch(addToCart(product));
+                  addToCartHandler(product);
                 } else {
                   toast.error("вы должны быть залогинени");
                 }
@@ -234,7 +234,7 @@ const SingleProduct = () => {
           </div>
         </div>
       </div>
-      <SingleProductReviews rating={ratings} productData={productData} />
+      <SingleProductReviews rating={rating} productData={productData} />
     </>
   );
 };

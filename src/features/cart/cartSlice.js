@@ -17,16 +17,41 @@ const cartSlice = createSlice({
             state.cartItems = [];
         },
         removeItem: (state, action) => {
-            const itemId = action.payload;
-            state.cartItems = state.cartItems.filter((item) => item.id !== itemId)
-            cartSlice.caseReducers.calculateTotals(state);
-            toast.error('товар удалён из корзини');
-        },
+            try {
+              const userObj = action.payload?.userObj;
+      
+          
+              if (!userObj || !userObj.cartitems) {
+                console.error('removeFromWishlist - userObj or userObj.cartitems is undefined');
+                return;
+              }
+          
+              const list = userObj.cartitems;
+              state.cartItems = list;
+            } catch (error) {
+              console.error('removeFromWishlist - Error:', error);
+            }
+          },
         updateCartAmount: (state, action) => {
             const cartItem = state.cartItems.find(item => item.id === action.payload.id);
             cartItem.amount = Number(action.payload.amount);
             cartSlice.caseReducers.calculateTotals(state);
         },
+        updateCart: (state, action) => {
+            try {
+              const userObj = action.payload?.userObj;
+          
+              if (!userObj || !userObj.cartitems) {
+                console.error('updateWishlist - userObj or userObj.cartitems is undefined');
+                return;
+              }
+          
+              const list = userObj.cartitems;
+              state.cartItems = list;
+            } catch (error) {
+              console.error('updateWishlist - Error:', error);
+            }
+          },
         calculateTotals: (state) => {
             let amount = 0;
             let total = 0;
@@ -39,18 +64,16 @@ const cartSlice = createSlice({
         },
         addToCart: (state, action) => {
             const cartItem = state.cartItems.find(item => item.id === action.payload.id);
-            if(!cartItem){
-                state.cartItems.push(action.payload);
-            }else{
-                cartItem.amount += action.payload.amount;
+            if (!cartItem) {
+                state.cartItems.push({ ...action.payload, amount: 1 }); // Устанавливаем начальное количество равным 1
+            } else {
+                cartItem.amount += action.payload.amount; // Увеличиваем количество на 1
             }
             cartSlice.caseReducers.calculateTotals(state);
-            toast.success('товар добавлен в корзину');
-
         }
     }
 })
 
-export const { clearCart, removeItem, updateCartAmount, decrease, calculateTotals, addToCart } = cartSlice.actions;
+export const { clearCart, removeItem, updateCartAmount, updateCart, decrease, calculateTotals, addToCart } = cartSlice.actions;
 
 export default cartSlice.reducer;

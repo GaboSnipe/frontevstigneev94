@@ -26,6 +26,7 @@ const Landing = () => {
 
       {products.length > 0 && (
         <div className="selected-products">
+          
           <h2 className="text-6xl text-center my-12 max-md:text-4xl text-accent-content">
             Наши товары
           </h2>
@@ -35,7 +36,7 @@ const Landing = () => {
                 key={product._id}
                 id={product._id}
                 title={product.name}
-                image={`https://raw.githubusercontent.com/GaboSnipe/backendevstigneev94/main${product.imageUrl}`}
+                image={`process.env.REACT_APP_API_URL${product.imageUrl}`}
                 price={product.price}
               />
             ))}

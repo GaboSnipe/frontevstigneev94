@@ -11,6 +11,7 @@ import {
   Profile,
   Search,
   ThankYou,
+  Payd,
   OrderHistory
 } from "./pages";
 import { landingLoader } from "./pages/Landing";

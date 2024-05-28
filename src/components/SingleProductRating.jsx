@@ -5,9 +5,7 @@ import React, { memo } from "react";
 const SingleProductRating = ({rating, productData}) => {
   return (
     <div className="rating">
-      {rating[0] === "empty star"
-        ? parse("<p className='text-2xl'>No rating</p>")
-        : rating.map((item) => {
+      {rating.map((item) => {
             return (
               <input
                 type="button"
@@ -23,7 +21,7 @@ const SingleProductRating = ({rating, productData}) => {
           })}
       {rating[0] === "full star" &&
         parse(
-          `<p className='text-xl ml-2'>(${productData?.totalReviewCount} reviews)</p>`
+          `<p className='text-xl ml-2'>${productData?.reviews.length} оценки</p>`
         )}
     </div>
   );

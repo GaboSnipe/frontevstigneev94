@@ -79,7 +79,7 @@ const Search = () => {
               key={nanoid()}
               id={product._id}
               title={product.name}
-              image={`https://raw.githubusercontent.com/GaboSnipe/backendevstigneev94/main${product.imageUrl}`}
+              image={`${process.env.REACT_APP_API_URL}${product.imageUrl}`}
               rating={product.rating}
               price={product.price}
               brandName={product.brandName}

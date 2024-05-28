@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { store } from "../store";
 import { loginUser, logoutUser } from "../features/auth/authSlice";
+import axios from "../axios";
 
 
 
@@ -19,7 +20,8 @@ const Login = () => {
   
   useEffect(() => {
     if (loginState) {
-      localStorage.clear();
+      localStorage.removeItem("token");
+      localStorage.removeItem("id");
       store.dispatch(logoutUser());
     }
   }, []);
@@ -40,7 +42,7 @@ const Login = () => {
   const proceedLogin = (e) => {
     e.preventDefault();
     if (isValidate()) {
-      fetch("http://localhost:8080/auth/login", {
+      fetch(`${process.env.REACT_APP_API_URL}/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

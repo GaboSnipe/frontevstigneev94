@@ -8,3 +8,23 @@
     margin-left: auto;
     margin-right: auto;
 }
+.image-container {
+  position: relative;
+}
+
+.image-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 2px solid #ff00ff; /* Цвет обводки */
+  opacity: 0; /* Начальная прозрачность */
+  transition: opacity 0.3s ease; /* Плавное изменение прозрачности */
+}
+
+.image-container:hover::before {
+  opacity: 1; /* Показывает обводку при наведении */
+  box-shadow: 0 0 10px 5px rgba(255, 0, 255, 0.5); /* Тень */
+}

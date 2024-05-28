@@ -44,7 +44,7 @@ axios.get(`/products/${item}`)
     <tr className="hover cursor-pointer">
       <th className="text-accent-content">{ counter + 1 }</th>
       <td className="imgaad mx-auto max-w-7xl">
-        <img src={`https://raw.githubusercontent.com/GaboSnipe/backendevstigneev94/main${pd.imageUrl}`} alt={pd.name} />
+        <img src={`process.env.REACT_APP_API_URL${pd.imageUrl}`} alt={pd.name} />
       </td>
       <td className="text-accent-content">{ pd.name }</td>
       <td>

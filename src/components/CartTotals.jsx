@@ -5,7 +5,7 @@ const CartTotals = () => {
   const { amount } = useSelector((state) => state.cart);
   const { total } = useSelector((state) => state.cart);
   const tax = total / 5;
-  const shipping = Math.round(total/30);
+  const shipping = Math.round(total/20);
   return (
     <div className='card bg-base-200'>
       <div className='card-body'>

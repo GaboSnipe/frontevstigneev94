@@ -7,7 +7,7 @@ const Hero = () => {
       <div className="max-w-xl">
         <h1 className="text-6xl font-bold max-md:text-4xl text-accent-content">Магазин бытовой Техники</h1>
         <p className="py-6 text-2xl max-md:text-lg text-accent-content">
-             широкий ассортимент 
+             Широкий ассортимент, 
               доставка по всей стране 
               и бесплатная установка
         </p>

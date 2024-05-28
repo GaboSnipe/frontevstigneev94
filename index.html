@@ -1,21 +1,26 @@
 <!doctype html>
-<html lang="en" data-theme="">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sania's Shop</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-    <script>
-      function setThemeFromLocalStorage() {
-        const darkMode = localStorage.getItem('darkMode') === 'true';
-        const theme = darkMode ? 'dark' : 'light';
-        document.querySelector('html').setAttribute('data-theme', theme);
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sania's Shop</title>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.jsx"></script>
+  <script>
+    function setThemeFromLocalStorage() {
+      const darkMode = localStorage.getItem('darkMode') === 'true';
+      if (darkMode) {
+        setTimeout(() => {
+          document.querySelector('html').setAttribute('data-theme', 'dark');
+        }, 1000); // 1000 milliseconds = 1 second
       }
-      setThemeFromLocalStorage();
-    </script>
-  </body>
+    }
+
+    // Wait for the complete page load event
+    window.addEventListener('load', setThemeFromLocalStorage);
+  </script>
+</body>
 </html>

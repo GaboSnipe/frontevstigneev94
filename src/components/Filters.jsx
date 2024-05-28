@@ -1,22 +1,51 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FormInput from "./FormInput";
 import { Form, Link } from "react-router-dom";
 import FormRange from "./FormRange";
 import FormSelect from "./FormSelect";
 import FormDatePicker from "./FormDatePicker";
 import FormCheckbox from "./FormCheckbox";
+import axios from "../axios";
+
+
 
 const Filters = () => {
-  const [selectCategoryList, setSelectCategoryList] = useState([
-    "все",
-    "Холодильник",
-    
-  ]);
-  const [selectBrandList, setSelectBrandList] = useState([
-    "все",
-    "samsung",
-  ]);
+  const [selectCategoryList, setSelectCategoryList] = useState(["все"]);
+  const [selectBrandList, setSelectBrandList] = useState(["все"]);
+  const [maxPrice, setMaxPrice] = useState(1000000);
 
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get("/categories");
+        setSelectCategoryList(prev => [...prev, ...response.data]);
+      } catch (error) {
+        console.error("Ошибка при получении категорий:", error);
+      }
+    };
+
+    const fetchBrands = async () => {
+      try {
+        const response = await axios.get("/brands");
+        setSelectBrandList(prev => [...prev, ...response.data]);
+      } catch (error) {
+        console.error("Ошибка при получении брендов:", error);
+      }
+    };
+    const fetchMaxPrice = async () => {
+      try {
+        const response = await axios.get("/max-price");
+        const roundedMaxPrice = Math.ceil(response.data.maxPrice);  // Округление до большего числа
+        setMaxPrice(roundedMaxPrice);
+      } catch (error) {
+        console.error("Ошибка при получении максимальной цены:", error);
+      }
+    };
+
+    fetchCategories();
+    fetchBrands();
+    fetchMaxPrice();
+  }, []);
   return (
     <Form className="bg-base-200 rounded-md px-8 py-4 grid gap-x-4  gap-y-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-center">
       {/* SEARCH */}
@@ -48,7 +77,7 @@ const Filters = () => {
         name="price"
         label="Цена"
         size="range-sm"
-        price={500000}
+        price={maxPrice}
       />
       {/* In stock */}
       <FormCheckbox

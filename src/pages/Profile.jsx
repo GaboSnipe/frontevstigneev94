@@ -34,6 +34,7 @@ const Profile = () => {
         phone: data.phone,
         address: data.address,
         password: data.password,
+        avatarUrl: data.avatarUrl,
       });
       setId(data._id);
     } catch (error) {
@@ -42,14 +43,23 @@ const Profile = () => {
   };
   const handleChangeFile = async (event) => {
     try {
-     const userData = new FormData();
+     const formData = new FormData();
      const file = event.target.files[0];
      formData.append('image', file);
-     const { data } = await axios.post('/upload', userData);
-     setImageUrl(data.url);
+     const { data } = await axios.post('/upload', formData);
+     setUserFormData({
+      id: userFormData.id,
+      name: userFormData.name,
+      lastname: userFormData.lastname,
+      email: userFormData.email,
+      phone: userFormData.phone,
+      address: userFormData.address,
+      password: userFormData.password,
+      avatarUrl: data.url,
+    });
     }catch (err) {
      console.warn(err);
-     alert('oshibka')
+     alert('фатальная ошибка')
     }
  
    };
@@ -73,6 +83,7 @@ const Profile = () => {
         phone: userFormData.phone,
         address: userFormData.address,
         password: userFormData.password,
+        avatarUrl: userFormData.avatarUrl,
       });
       const putData = putResponse.data;
       toast.success("Данные успешно обновлены");
@@ -144,10 +155,10 @@ const Profile = () => {
           </div>
 
           <div className="form-control w-full lg:max-w-xs">
-            <label className="label">
-             <img onClick ={()=> inputFileRef.current.click()}  className="centered-image" variant="outlined" size="large" src="https://xsgames.co/randomusers/avatar.php?g=male" />
+            <label className="label ">
+             <input ref={inputFileRef} type="file" className="input input-bordered w-full lg:max-w-xs" onChange={handleChangeFile} hidden />
+             <img onClick ={()=> handleChangeFile}  className="centered-image " variant="outlined" size="large" src={`${process.env.REACT_APP_API_URL}${userFormData?.avatarUrl}`} />
             </label>
-            <input ref={inputFileRef} type="file" className="input input-bordered w-full lg:max-w-xs" onChange={handleChangeFile} hidden />
           </div>
 
           <div className="form-control w-full lg:max-w-xs">

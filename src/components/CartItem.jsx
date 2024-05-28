@@ -1,12 +1,41 @@
 import { useDispatch } from "react-redux";
 import { removeItem, updateCartAmount } from "../features/cart/cartSlice";
-
+import { toast } from "react-toastify";
+import axios from "../axios";
+import React, { useState, useEffect } from "react";
 
 const CartItem = ({ cartItem }) => {
-  const { id, title, price, image, amount, brandName, selectedSize } =
-    cartItem;
+  const [userObj, setuserObj] = useState(null);
 
-    const dispatch = useDispatch();
+  const { id, title, price, image, amount, brandName, selectedSize } = cartItem;
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    axios.get('/auth/me')
+      .then(response => {
+        setuserObj(response.data);
+      })
+      .catch(error => {
+        console.error('Ошибка при получении данных:', error);
+      });
+  }, []);
+
+  const removeFromCartHandler = async (product) => {
+    if (!userObj) {
+      console.error('User object is not set');
+      return;
+    }
+    try {
+      await axios.put(`/users/${userObj._id}/cart/remove`, { item: product.id });
+      const updatedUserObj = await axios.get('/auth/me');
+      dispatch(removeItem({ userObj: updatedUserObj.data }));
+      toast.success('Элемент удален из списка желаний');
+    } catch (error) {
+      console.error('Ошибка при удалении элемента из списка желаний:', error);
+      toast.error('Произошла ошибка при удалении элемента из списка желаний');
+    }
+  };
 
   return (
     <article
@@ -15,7 +44,7 @@ const CartItem = ({ cartItem }) => {
     >
       {/* IMAGE */}
       <img
-        src={`https://raw.githubusercontent.com/GaboSnipe/backendevstigneev94/main${image}`}
+        src={`process.env.REACT_APP_API_URL${image}`}
         alt={title}
         className="h-24 w-24 rounded-lg sm:h-32 sm:w-32 object-cover"
       />
@@ -25,10 +54,10 @@ const CartItem = ({ cartItem }) => {
         <h3 className="capitalize font-medium text-accent-content">{title}</h3>
         {/* COMPANY */}
         <h4 className="mt-2 capitalize text-sm text-accent-content">
-          производитель: { brandName }
+          производитель: {brandName}
         </h4>
         <h4 className="mt-2 capitalize text-sm text-accent-content">
-          тип: { selectedSize }
+          тип: {selectedSize}
         </h4>
       </div>
       <div className="sm:ml-12">
@@ -42,20 +71,20 @@ const CartItem = ({ cartItem }) => {
             id="amount"
             className="mt-2 input input-bordered input-sm w-full max-w-xs text-accent-content"
             value={amount}
-           onChange={(event) => dispatch(updateCartAmount({id: id, amount: event.target.value}))}
-            />
+            onChange={(event) => dispatch(updateCartAmount({ id: id, amount: event.target.value }))}
+          />
         </div>
         {/* REMOVE */}
         <button
           className="mt-2 link link-warning link-hover text-sm text-accent-content"
-          onClick={()=> dispatch(removeItem(id))}
+          onClick={() => removeFromCartHandler(cartItem)}
         >
           удалить
         </button>
       </div>
 
       {/* PRICE */}
-      <p className="font-medium sm:ml-auto text-accent-content">₽{ (price * amount).toFixed(2) }</p>
+      <p className="font-medium sm:ml-auto text-accent-content">₽{(price * amount).toFixed(2)}</p>
     </article>
   );
 };
