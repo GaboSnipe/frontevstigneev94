@@ -42,7 +42,7 @@ const Login = () => {
   const proceedLogin = (e) => {
     e.preventDefault();
     if (isValidate()) {
-      fetch(`${process.env.REACT_APP_API_URL}/auth/login`, {
+      fetch(`https://frontevstigneev94.vercel.app/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

@@ -13,7 +13,7 @@ const Payfinal = ({ onSelectItem }) => {
       <div className="selected-products-grid mx-auto">
         <div style={{ width: '23vw' }}>
         <img
-          src={`${process.env.REACT_APP_API_URL}/uploads/1.png`}
+          src={`https://frontevstigneev94.vercel.app/uploads/1.png`}
           onClick={() => handleImageSelect("СБП")}
           className={`h-24 w-24 rounded-lg sm:h-32 sm:w-32 object-cover ${selectedImage === "СБП" ? 'border-3 border-darkorange' : ''}`}
           style={{
@@ -25,7 +25,7 @@ const Payfinal = ({ onSelectItem }) => {
         </div>
         <div style={{ width: '23vw' }}>
           <img
-            src={`${process.env.REACT_APP_API_URL}/uploads/2.png`}
+            src={`https://frontevstigneev94.vercel.app/uploads/2.png`}
             onClick={() => handleImageSelect("Юмоней")}
             className="h-24 w-24 rounded-lg sm:h-32 sm:w-32 object-cover"
             style={{
@@ -40,7 +40,7 @@ const Payfinal = ({ onSelectItem }) => {
       <div className="selected-products-grid mx-auto">
         <div style={{ width: '23vw' }}>
           <img
-            src={`${process.env.REACT_APP_API_URL}/uploads/3.png`}
+            src={`https://frontevstigneev94.vercel.app/uploads/3.png`}
             onClick={() => handleImageSelect("Банковская карта")}
             className="h-24 w-24 rounded-lg sm:h-32 sm:w-32 object-cover"
             style={{
@@ -53,7 +53,7 @@ const Payfinal = ({ onSelectItem }) => {
         </div>
         <div style={{ width: '23vw' }}>
           <img
-            src={`${process.env.REACT_APP_API_URL}/uploads/4.png`}
+            src={`https://frontevstigneev94.vercel.app/uploads/4.png`}
             onClick={() => handleImageSelect("Сбер пей")}
             className="h-24 w-24 rounded-lg sm:h-32 sm:w-32 object-cover"
             style={{
