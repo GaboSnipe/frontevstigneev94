@@ -44,7 +44,7 @@ axios.get(`/products/${item}`)
     <tr className="hover cursor-pointer">
       <th className="text-accent-content">{ counter + 1 }</th>
       <td className="imgaad mx-auto max-w-7xl">
-        <img src={`https://frontevstigneev94.vercel.app${pd.imageUrl}`} alt={pd.name} />
+        <img src={`https://backendevstigneev94.vercel.app${pd.imageUrl}`} alt={pd.name} />
       </td>
       <td className="text-accent-content">{ pd.name }</td>
       <td>

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-    baseURL: 'https://frontevstigneev94.vercel.app',
+    baseURL: 'https://backendevstigneev94.vercel.app',
 });
 
 instance.interceptors.request.use((config)=>{

@@ -165,7 +165,7 @@ const Header = () => {
             <div className="dropdown dropdown-end">
               <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                 <div className="w-10 rounded-full">
-                  <img src={`https://frontevstigneev94.vercel.app${userObj?.avatarUrl}`} />
+                  <img src={`https://backendevstigneev94.vercel.app${userObj?.avatarUrl}`} />
                 </div>
               </label>
               <ul

@@ -61,7 +61,7 @@ const Register = () => {
       userWishlist: [],
       cart:[],
     };
-    fetch(`https://frontevstigneev94.vercel.app/user/checkmailend`, {
+    fetch(`https://backendevstigneev94.vercel.app/user/checkmailend`, {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify({ code, email }), // Передача кода и электронной почты
@@ -72,7 +72,7 @@ const Register = () => {
           throw new Error(data.message);
         });
       }
-      fetch(`https://frontevstigneev94.vercel.app/auth/register`, {
+      fetch(`https://backendevstigneev94.vercel.app/auth/register`, {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify(regObj),
@@ -113,7 +113,7 @@ const Register = () => {
       cart:[],
     };
     if (isValidate()) {
-      fetch(`https://frontevstigneev94.vercel.app/user/checkmailstart`, {
+      fetch(`https://backendevstigneev94.vercel.app/user/checkmailstart`, {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ email: regObj.email }),

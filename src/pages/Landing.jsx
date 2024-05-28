@@ -36,7 +36,7 @@ const Landing = () => {
                 key={product._id}
                 id={product._id}
                 title={product.name}
-                image={`https://frontevstigneev94.vercel.app${product.imageUrl}`}
+                image={`https://backendevstigneev94.vercel.app${product.imageUrl}`}
                 price={product.price}
               />
             ))}
