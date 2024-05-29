@@ -53,27 +53,11 @@ const Header = () => {
     fetchWishlist();
   }, [loginState]);
 
-  useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "https://vk.com/js/api/openapi.js?168";
-    script.onload = () => {
-      window.VK.Widgets.CommunityMessages("vk_community_messages", 226042267, {
-        disableExpandChatSound: 1,
-        disableButtonTooltip: true 
-      });
-    };
-
-    document.body.appendChild(script);
-    return () => {
-      document.body.removeChild(script);
-    };
-  }, []);
   
   
 
   return (
     <>
-      <div id="vk_community_messages"></div>
       <div className="navbar bg-base-100 max-w-7xl mx-auto">
         <div className="flex-1">
           <Link

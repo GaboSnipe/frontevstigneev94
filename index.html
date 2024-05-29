@@ -1,12 +1,17 @@
 <!doctype html>
 <html lang="en" data-theme="light">
 <head>
+  <script type="text/javascript" src="https://vk.com/js/api/openapi.js?168"></script>
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="/vite.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sania's Shop</title>
 </head>
 <body>
+  <div id="vk_community_messages"></div>
+  <script type="text/javascript">
+    VK.Widgets.CommunityMessages("vk_community_messages", 226042267, {tooltipButtonText: "Есть вопрос?", disableExpandChatSound: 1});
+  </script>
   <div id="root"></div>
   <script type="module" src="/src/main.jsx"></script>
   <script>
@@ -18,8 +23,6 @@
         }, 1000); // 1000 milliseconds = 1 second
       }
     }
-
-    // Wait for the complete page load event
     window.addEventListener('load', setThemeFromLocalStorage);
   </script>
 </body>

@@ -235,7 +235,7 @@ const Register = () => {
         </div>
       ) : ( <div className="py-5 text-center px-5 py-7 p-10 xs:p-0 mx-auto md:w-full md:max-w-md md:h-full md:max-h-md">
               <label className="font-semibold text-sm pb-1 block text-accent-content">
-                Имя
+                Код Подтверждения
               </label>
               <input
                 type="text"
