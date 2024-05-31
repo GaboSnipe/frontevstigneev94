@@ -50,17 +50,13 @@ const Login = () => {
         body: JSON.stringify({ email, password })
       })
       .then((res) => {
-        if (res) {
-          localStorage.setItem("token", e.token);
-          store.dispatch(loginUser());
-        }
         if (!res.ok) {
           if (res.headers.get('content-type')?.includes('application/json')) {
             return res.json().then((data) => {
               throw new Error(data.message);
             });
           } else {
-            throw new Error("не удалось залогинится");
+            throw new Error("не удалось залогиниться");
           }
         }
         return res.json();
@@ -72,11 +68,11 @@ const Login = () => {
         navigate("/");
       })
       .catch((err) => {
-        toast.error("ошибка: " + err.message);
+        toast.error("Ошибка: " + err.message);
       });
-      
     }
   };
+  
   
   
   
