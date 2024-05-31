@@ -157,7 +157,7 @@ const Profile = () => {
           <div className="form-control w-full lg:max-w-xs">
             <label className="label ">
              <input ref={inputFileRef} type="file" className="input input-bordered w-full lg:max-w-xs" onChange={handleChangeFile} hidden />
-             <img onClick ={()=> handleChangeFile}  className="centered-image " variant="outlined" size="large" src={`https://backendevstigneev94.vercel.app${userFormData?.avatarUrl}`} />
+             <img onClick ={()=> handleChangeFile}  className="centered-image " variant="outlined" size="large" src={`https://backendevstigneev94.onrender.com${userFormData?.avatarUrl}`} />
             </label>
           </div>
 

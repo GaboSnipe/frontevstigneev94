@@ -42,7 +42,7 @@ const Login = () => {
   const proceedLogin = (e) => {
     e.preventDefault();
     if (isValidate()) {
-      fetch(`https://backendevstigneev94.vercel.app/auth/login`, {
+      fetch(`https://backendevstigneev94.onrender.com/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

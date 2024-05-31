@@ -44,7 +44,7 @@ const CartItem = ({ cartItem }) => {
     >
       {/* IMAGE */}
       <img
-        src={`https://backendevstigneev94.vercel.app${image}`}
+        src={`https://backendevstigneev94.onrender.com${image}`}
         alt={title}
         className="h-24 w-24 rounded-lg sm:h-32 sm:w-32 object-cover"
       />

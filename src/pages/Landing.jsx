@@ -36,7 +36,7 @@ const Landing = () => {
                 key={product._id}
                 id={product._id}
                 title={product.name}
-                image={`https://backendevstigneev94.vercel.app${product.imageUrl}`}
+                image={`https://backendevstigneev94.onrender.com${product.imageUrl}`}
                 price={product.price}
               />
             ))}
