@@ -13,7 +13,7 @@ const OrderHistory = () => {
 
   const getOrderHistory = async () => {
     try {
-      const response = await axios.get("/orders");
+      const response = await axios.get(`/orders/${localStorage.getItem("id")}`);
       const data = response.data;
       setOrders(
         data.filter((order) => order.userId === localStorage.getItem("id"))
@@ -65,7 +65,7 @@ const OrderHistory = () => {
           >
             <input type="radio" name={`my-accordion-${index}`} />
             <div className="collapse-title text-xl font-medium text-accent-content">
-              оформить {order.id} - {order.orderStatus}
+              Заказ {order.id} - {order.orderStatus}
             </div>
             <div className="collapse-content">
               <div className="overflow-x-auto">

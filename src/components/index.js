@@ -21,3 +21,4 @@ export { default as FormRange } from "./FormRange";
 export { default as FormDatePicker } from "./FormDatePicker";
 export { default as SingleProductReviews } from "./SingleProductReviews";
 export { default as SingleReview } from "./SingleReview";
+export { default as CreateReviews } from "./CreateReviews";

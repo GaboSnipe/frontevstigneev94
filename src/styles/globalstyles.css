@@ -28,3 +28,8 @@
   opacity: 1; /* Показывает обводку при наведении */
   box-shadow: 0 0 10px 5px rgba(255, 0, 255, 0.5); /* Тень */
 }
+.container {
+  display: flex;
+  justify-content: center;
+  gap: 10px; /* Небольшой отступ между элементами */
+}

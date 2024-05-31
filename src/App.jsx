@@ -12,7 +12,12 @@ import {
   Search,
   ThankYou,
   Payd,
-  OrderHistory
+  OrderHistory,
+  AdminPanel,
+  About,
+  UserList,
+  OrderList,
+  ProductList
 } from "./pages";
 import { landingLoader } from "./pages/Landing";
 import { singleProductLoader } from "./pages/SingleProduct";
@@ -70,6 +75,26 @@ const router = createBrowserRouter([
       {
         path:"order-history",
         element: <OrderHistory />
+      },
+      {
+        path:"admin-panel",
+        element: <AdminPanel />
+      },
+      {
+        path:"about",
+        element: <About />
+      },
+      {
+        path:"userlist",
+        element: <UserList />
+      },
+      {
+        path:"orderlist",
+        element: <OrderList />
+      },
+      {
+        path:"productlist",
+        element: <ProductList />
       }
     ],
   },

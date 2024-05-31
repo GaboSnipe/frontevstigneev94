@@ -5,6 +5,7 @@ import {
   SelectSize,
   SingleProductRating,
   SingleProductReviews,
+  CreateReviews
 } from "../components";
 import { FaHeart, FaCartShopping } from "react-icons/fa6";
 import { Link, useLoaderData } from "react-router-dom";
@@ -234,6 +235,7 @@ const SingleProduct = () => {
           </div>
         </div>
       </div>
+      <CreateReviews productData={productData}/>
       <SingleProductReviews rating={rating} productData={productData} />
     </>
   );

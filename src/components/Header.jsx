@@ -15,6 +15,7 @@ import { calculateTotals, updateCart } from "../features/cart/cartSlice";
 const Header = () => {
   const { amount, total } = useSelector((state) => state.cart);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isAdmin, setISAdmin] = useState(false);
   const [userObj, setuserObj] = useState(null);
   const dispatch = useDispatch();
   const { darkMode } = useSelector((state) => state.auth);
@@ -28,7 +29,11 @@ const Header = () => {
       if (loginState) {
         try {
           const getResponse = await axios.get(`/auth/me`);
+          
           const userObj = getResponse.data;
+          if (getResponse.data.roles.includes("ADMIN")) {
+            setISAdmin(true);
+          }
           setuserObj(userObj);
           store.dispatch(updateWishlist({ userObj }));
           store.dispatch(updateCart({ userObj }));
@@ -50,6 +55,7 @@ const Header = () => {
 
   useEffect(() => {
     setIsLoggedIn(loginState);
+    setISAdmin(false);
     fetchWishlist();
   }, [loginState]);
 
@@ -169,8 +175,14 @@ const Header = () => {
                     История Покупок
                   </Link>
                 </li>
+                {isAdmin &&
                 <li>
-                  <Link to="/login" className="text-accent-content">
+                  <Link to="/admin-panel" className="text-accent-content  text-purple-600 hover:text-purple-500">
+                    Админ Панель
+                  </Link>
+                </li>}
+                <li>
+                  <Link to="/login" className="text-accent-content text-red-600 hover:text-red-500">
                     Выйти
                   </Link>
                 </li>

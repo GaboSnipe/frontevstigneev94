@@ -14,3 +14,7 @@ export { default as ThankYou } from "./ThankYou";
 export { default as Payd } from "./Payd";
 export { default as OrderHistory } from "./OrderHistory";
 export { default as Payfinal } from "./Payfinal";
+export { default as AdminPanel } from "./AdminPanel";
+export { default as OrderList } from "./OrderList";
+export { default as UserList } from "./UserList";
+export { default as ProductList } from "./ProductList";
