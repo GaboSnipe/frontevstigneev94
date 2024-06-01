@@ -128,7 +128,7 @@ const ProductList = () => {
             key={nanoid()}
             className="collapse collapse-plus bg-base-200 mb-2"
           >
-            <input type="radio" name={`my-accordion-${index}`} />
+            <input type="checkbox" name={`my-accordion-${index}`} />
             <div className="collapse-title text-xl font-medium text-accent-content">
               Заказ {order._id} - {order.orderStatus}
             </div>

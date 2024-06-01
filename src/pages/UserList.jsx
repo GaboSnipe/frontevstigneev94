@@ -43,6 +43,26 @@ const UserList = () => {
       toast.error(error.response?.data?.message || "Ошибка при сделке пользователя администратором");
     }
   };
+  const delAdmin = async (userId) => {
+    try {
+      await axios.delete(`/users/${userId}/admin`);
+      toast.success("Пользователь успешно снят с администратора");
+      getAllUsers(); 
+    } catch (error) {
+      toast.error(
+        error.response?.data?.message || "Ошибка при снятии пользователя с администратора"
+      );
+    }
+  };
+  const delUser = async (userId) => {
+    try {
+      await axios.delete(`/user/${userId}`);
+      toast.success("Пользователь успешно удалён");
+      getAllUsers();
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Ошибка при сделке пользователя администратором");
+    }
+  };
 
   useEffect(() => {
     axios.get('/auth/me')
@@ -99,7 +119,7 @@ const UserList = () => {
             key={nanoid()}
             className="collapse collapse-plus bg-base-200 mb-2"
           >
-            <input type="radio" name={`my-accordion-${index}`} />
+             <input type="checkbox" name={`my-accordion-${user._id}`} />
             <div className="collapse-title text-xl font-medium text-accent-content">
               Пользователь: {user.name} {user.lastname}
             </div>
@@ -129,11 +149,14 @@ const UserList = () => {
                       <td>{new Date(user.createdAt).toLocaleDateString()}</td>
                       {isAdmin && (
                         <td>
+                        <div className="d-flex">
                           {user.roles.includes("ADMIN") ? (
-                            <span className="text-green-600">Администратор</span>
+                            <button onClick={() => delAdmin(user._id)} className="btn bg-red-600 hover:bg-red-500 text-white btn-sm mx-2">Cнять с администрации</button>
                           ) : (
-                            <button onClick={() => makeAdmin(user._id)} className="btn bg-blue-600 hover:bg-blue-500 text-white">Сделать администратором</button>
+                            <button onClick={() => makeAdmin(user._id)} className="btn bg-purple-600 hover:bg-purple-500 text-white btn-sm mx-2">Сделать администратором</button>
                           )}
+                          <button onClick={() => delUser(user._id)}  className="btn btn-sm mx-2 custom-button">Удалить пользователя</button>
+                        </div>
                         </td>
                       )}
                     </tr>

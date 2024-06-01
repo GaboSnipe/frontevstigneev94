@@ -1,0 +1,30 @@
+.custom-button {
+    padding: 0.25rem 0.5rem; /* Уменьшенный padding */
+    font-size: 0.8rem; /* Уменьшенный размер текста */
+    border: 1px solid #ced4da; /* Цвет границы */
+    background-color: #f8f9fa; /* Цвет фона */
+    color: #212529; /* Цвет текста */
+    border-radius: 0.25rem; /* Закругление углов */
+  }
+  
+  .custom-button:hover {
+    background-color: #e2e6ea; /* Цвет фона при наведении */
+    border-color: #dae0e5; /* Цвет границы при наведении */
+  }
+  
+  .bg-red-600 {
+    background-color: #e3342f !important;
+  }
+  
+  .bg-red-600:hover {
+    background-color: #cc1f1a !important;
+  }
+  
+  .bg-purple-600 {
+    background-color: #6b46c1 !important;
+  }
+  
+  .bg-purple-600:hover {
+    background-color: #553c9a !important;
+  }
+  

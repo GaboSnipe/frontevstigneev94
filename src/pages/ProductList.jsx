@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "../axios";
 import { nanoid } from "nanoid";
+import { SingleProductReviews } from "../components";
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
@@ -15,10 +16,12 @@ const ProductList = () => {
     try {
       const response = await axios.get("/products");
       setProducts(response.data);
+      console.log(products);
     } catch (error) {
       toast.error(error.response?.data?.message || "Ошибка при получении данных");
     }
   };
+  const [userObj, setUserObj] = useState(null);
 
   useEffect(() => {
     axios.get('/auth/me')
@@ -35,6 +38,7 @@ const ProductList = () => {
   }, [navigate]);
 
   useEffect(() => {
+    getUserInfo(products.review);
     if (!loginState) {
       toast.error("Вы должны быть залогинены");
       navigate("/");
@@ -43,6 +47,15 @@ const ProductList = () => {
     }
   }, [loginState, navigate]);
 
+  const getUserInfo = (review) => {
+    axios.get(`/user/${review?.userId}`)
+      .then(response => {
+        setUserObj(response.data);
+      })
+      .catch(error => {
+        console.error('Ошибка при получении данных:', error);
+      });
+    };
   const handleReviewDelete = (productId, reviewIndex) => {
     const updatedProducts = products.map(product => {
       if (product._id === productId) {
@@ -109,37 +122,11 @@ const ProductList = () => {
                   </tbody>
                 </table>
               </div>
-              <h3 className="text-2xl font-medium mt-4">Отзывы:</h3>
-              {product.reviews.map((review, reviewIndex) => (
-                <div key={nanoid()} className="review my-4 p-4 bg-base-300 rounded-lg">
-                  <div className="flex items-center mb-2">
-                    <img src={review.userImage} alt={review.username} className="w-10 h-10 rounded-full mr-2" />
-                    <div>
-                      <h4 className="text-lg font-medium">{review.username}</h4>
-                      <p className="text-sm text-gray-500">{review.location}</p>
-                    </div>
-                  </div>
-                  <div className="rating mb-2">
-                    {Array.from({ length: review.rating }).map((_, starIndex) => (
-                      <span key={starIndex} className="text-yellow-500">★</span>
-                    ))}
-                    {Array.from({ length: 5 - review.rating }).map((_, starIndex) => (
-                      <span key={starIndex} className="text-gray-300">★</span>
-                    ))}
-                  </div>
-                  <h5 className="text-lg font-medium">{review.reviewTitle}</h5>
-                  <p>{review.reviewText}</p>
-                  <p className="text-sm text-gray-500">{review.date}</p>
-                  {isAdmin && (
-                    <button
-                      onClick={() => handleReviewDelete(product._id, reviewIndex)}
-                      className="btn btn-error mt-2"
-                    >
-                      Удалить отзыв
-                    </button>
-                  )}
-                </div>
-              ))}
+              {product.reviews.length > 0 && (
+              <>
+                <SingleProductReviews productData={product} />
+               </>
+               )}
             </div>
           </div>
         ))

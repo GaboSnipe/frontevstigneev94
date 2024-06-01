@@ -239,7 +239,7 @@ const SingleProduct = () => {
       </div>
       {loginState &&
       <CreateReviews productData={productData}/>}
-      <SingleProductReviews rating={rating} productData={productData} />
+      <SingleProductReviews productData={productData} />
     </>
   );
 };

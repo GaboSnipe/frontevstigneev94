@@ -1,8 +1,18 @@
 import React, { useEffect, useState } from "react";
 import axios from "../axios";
 import { nanoid } from "nanoid";
+import { toast } from "react-toastify";
 
-const SingleReview = ({ reviewObj }) => {
+const removeComent = async (reviewObj, productData) => {
+  try {
+    const response = await axios.delete(`/products/${productData._id}/reviews/${reviewObj.userId}`);
+      toast.success("Коментарый успешно удалён");
+  } catch (error) {
+    console.error('Ошибка при удалении отзыва:', error.response?.data?.message || error.message);
+  }
+};
+
+const SingleReview = ({ reviewObj, isAdmin, productData }) => {
   const [userObj, setUserObj] = useState(null);
 
   useEffect(() => {
@@ -21,18 +31,21 @@ const SingleReview = ({ reviewObj }) => {
 console.log(userObj);
   return (
     <article className="mb-10">
-      {userObj && (
         <div className="flex items-center mb-4">
           <img
             className="w-10 rounded-full"
-            src={`https://backendevstigneev94.onrender.com${userObj.avatarUrl}`}
+            src={`https://backendevstigneev94.onrender.com${userObj?.avatarUrl}`}
             alt=""
           />
-          <div className="font-medium dark:text-white">
-            <p>             {userObj.name} {userObj.lastname}</p>
-          </div>
+            <div className="font-medium dark:text-white flex items-center">
+              <p>{userObj?.name} {userObj?.lastname}</p>
+              {isAdmin &&
+              <button className="btn btn-xs btn-error text-sm ml-2" onClick={() => removeComent(reviewObj, productData)}>
+                удалить коментарии
+              </button>}
+            </div>
+
         </div>
-      )}
       <div className="flex items-center mb-1 space-x-1 rtl:space-x-reverse">
         {rating.map((item) => (
           <svg
