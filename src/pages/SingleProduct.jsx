@@ -19,6 +19,7 @@ import {
 } from "../features/wishlist/wishlistSlice";
 import { toast } from "react-toastify";
 import { store } from "../store";
+import { selectIsAuth } from "../redux/slices/auth";
 
 export const singleProductLoader = async ({ params }) => {
   const { id } = params;
@@ -106,6 +107,7 @@ const SingleProduct = () => {
 
   const addToCartHandler = async (product) => {
     try {
+      console.log(product);
       await axios.post(`/users/${userObj._id}/cart`, { item: product });
       const updatedUserObj = await axios.get(`/auth/me`);
       store.dispatch(addToCart( product ));
@@ -235,7 +237,8 @@ const SingleProduct = () => {
           </div>
         </div>
       </div>
-      <CreateReviews productData={productData}/>
+      {loginState &&
+      <CreateReviews productData={productData}/>}
       <SingleProductReviews rating={rating} productData={productData} />
     </>
   );

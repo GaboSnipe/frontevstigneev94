@@ -64,11 +64,7 @@ const cartSlice = createSlice({
         },
         addToCart: (state, action) => {
             const cartItem = state.cartItems.find(item => item.id === action.payload.id);
-            if (!cartItem) {
-                state.cartItems.push({ ...action.payload, amount: 1 }); // Устанавливаем начальное количество равным 1
-            } else {
-                cartItem.amount += action.payload.amount; // Увеличиваем количество на 1
-            }
+                state.cartItems.push({ ...action.payload, amount: action.payload.amount }); // Устанавливаем начальное количество равным 1
             cartSlice.caseReducers.calculateTotals(state);
         }
     }
