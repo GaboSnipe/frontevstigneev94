@@ -108,7 +108,7 @@ const AdminPanel = () => {
         {/* Форма удаления из черного списка */}
         <div className="w-1/2 p-5">
           <div className="text-2xl">
-            <p className="text-accent-content">Добавление почты в черный список</p>
+            <p className="text-accent-content">Удаление почты из черного списка</p>
           </div>
           <form className="px-5 py-7" onSubmit={removeFromBlackList}>
             <label className="font-semibold text-sm pb-1 block text-accent-content">Почта</label>
