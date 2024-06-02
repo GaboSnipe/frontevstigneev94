@@ -36,6 +36,10 @@ const SingleProduct = () => {
 
   const dispatch = useDispatch();
   const loginState = useSelector((state) => state.auth.isLoggedIn);
+  const [isAdmin, setISAdmin] = useState(false);
+  const [showConfirmation, setShowConfirmation] = useState(false);
+
+
   const [rating, setRating] = useState([
     "empty star",
     "empty star",
@@ -46,10 +50,40 @@ const SingleProduct = () => {
 
   const { productData } = useLoaderData();
 
+  
+
+  const handleRemoveProduct = () => {
+    setShowConfirmation(true);
+  };
+
+  const confirmRemoveProduct = () => {
+    removeProduct();
+    setShowConfirmation(false);
+  };
+
+  const cancelRemoveProduct = () => {
+    setShowConfirmation(false); // Закрываем модальное окно без удаления
+  };
+  
+  const removeProduct = async () => {
+    try {
+      const response = await axios.delete(`/products/${productData._id}`);
+      toast.success('Продукт успешно удален:');
+      return true;
+    } catch (error) {
+      toast.error('Ошибка при удалении продукта:', error);
+      return false;
+    }
+  };
+
+
   useEffect(() => {
     axios.get('/auth/me')
       .then(response => {
         setuserObj(response.data);
+        if (response.data.roles.includes("ADMIN")) {
+          setISAdmin(true);
+        }
       })
       .catch(error => {
         console.error('Ошибка при получении данных:', error);
@@ -107,7 +141,6 @@ const SingleProduct = () => {
 
   const addToCartHandler = async (product) => {
     try {
-      console.log(product);
       await axios.post(`/users/${userObj._id}/cart`, { item: product });
       const updatedUserObj = await axios.get(`/auth/me`);
       store.dispatch(addToCart( product ));
@@ -149,7 +182,7 @@ const SingleProduct = () => {
             {productData?.name}
           </h2>
           <SingleProductRating rating={rating} productData={productData} />
-          <p className="text-3xl text-error">₽{productData?.price}</p>
+            <p className="text-3xl text-error">₽{productData?.price}</p>
           <div className="expandable-text">
             <p className={isExpanded ? 'expanded' : 'collapsed'}>
               {isExpanded ? productData?.description : `${productData?.description.substring(0, 200)}...`}
@@ -212,6 +245,46 @@ const SingleProduct = () => {
               </button>
             )}
           </div>
+          <div>
+          {isAdmin && (
+                <>
+                  <button
+                    type="button"
+                    onClick={handleRemoveProduct}
+                    className="btn ml-2 inline-flex items-center px-3 py-1 border border-transparent text-xs leading-4 font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:border-red-700 focus:ring-red active:bg-red-700 transition ease-in-out duration-150"
+                  >
+                    Удалить
+                  </button>
+                  <Link
+                    to={`/productcreate/${productData._id}`}
+                    className="btn ml-2 inline-flex items-center px-3 py-1 border border-transparent text-xs leading-4 font-medium rounded-md text-white bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:border-yellow-700 focus:ring-yellow active:bg-yellow-700 transition ease-in-out duration-150"
+                  >
+                    Изменить
+                  </Link>
+                  {showConfirmation && (
+                    <div className="fixed top-0 left-0 flex justify-center items-center w-full h-full bg-gray-800 bg-opacity-75 z-50">
+                      <div className="bg-white p-8 rounded-md shadow-lg">
+                        <p>Вы уверены, что хотите удалить продукт?</p>
+                        <div className="mt-4 flex justify-center">
+                          <button
+                            onClick={confirmRemoveProduct}
+                            className="px-4 py-2 mr-4 bg-red-600 text-white rounded-md hover:bg-red-700"
+                          >
+                            Да
+                          </button>
+                          <button
+                            onClick={cancelRemoveProduct}
+                            className="px-4 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400"
+                          >
+                            Отмена
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </>
+              )}
+              </div>
           <div className="other-product-info flex flex-col gap-x-2">
             <div className="badge bg-gray-700 badge-lg font-bold text-white p-5 mt-2">
               производитель: {productData?.brandName}

@@ -4,10 +4,23 @@ import { ProductElement, SearchPagination } from "../components";
 import { nanoid } from "nanoid";
 
 const Search = () => {
+  const [isAdmin, setISAdmin] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [products, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
+
+  useEffect(() => {
+    axios.get('/auth/me')
+      .then(response => {
+        if (response.data.roles.includes("ADMIN")) {
+          setISAdmin(true);
+        }
+      })
+      .catch(error => {
+        console.error('Ошибка при получении данных:', error);
+      });
+  }, []);
   const handleSearch = async (e) => {
     e.preventDefault();
     setCurrentPage(prevState => 1);
@@ -76,6 +89,7 @@ const Search = () => {
         {products && Array.isArray(products) &&
           products.map((product) => (
             <ProductElement
+              isAdmin={isAdmin}
               key={nanoid()}
               id={product._id}
               title={product.name}

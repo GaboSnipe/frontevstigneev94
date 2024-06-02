@@ -17,4 +17,4 @@ export { default as Payfinal } from "./Payfinal";
 export { default as AdminPanel } from "./AdminPanel";
 export { default as OrderList } from "./OrderList";
 export { default as UserList } from "./UserList";
-export { default as ProductList } from "./ProductList";
+export { default as ProductCreate } from "./ProductCreate";

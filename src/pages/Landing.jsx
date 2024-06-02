@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "../styles/Landing.css";
 import { Hero, ProductElement, Stats } from "../components";
 import { useLoaderData, useNavigate } from "react-router-dom";
@@ -15,9 +15,25 @@ export const landingLoader = async () => {
   }
 };
 
+
+
 const Landing = () => {
+  const [isAdmin, setISAdmin] = useState(false);
+
   const { products } = useLoaderData();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    axios.get('/auth/me')
+      .then(response => {
+        if (response.data.roles.includes("ADMIN")) {
+          setISAdmin(true);
+        }
+      })
+      .catch(error => {
+        console.error('Ошибка при получении данных:', error);
+      });
+  }, []);
 
   return (
     <main>
@@ -33,6 +49,7 @@ const Landing = () => {
           <div className="selected-products-grid max-w-7xl mx-auto">
             {products.map((product) => (
               <ProductElement
+                isAdmin={isAdmin}
                 key={product._id}
                 id={product._id}
                 title={product.name}

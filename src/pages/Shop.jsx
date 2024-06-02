@@ -11,6 +11,8 @@ import { useLoaderData, useNavigate, useSearchParams } from "react-router-dom";
 import { nanoid } from "nanoid";
 
 export const shopLoader = async ({ request }) => {
+
+
   const params = Object.fromEntries([
     ...new URL(request.url).searchParams.entries(),
   ]);
@@ -72,6 +74,19 @@ export const shopLoader = async ({ request }) => {
 
 
 const Shop = () => {
+  const [isAdmin, setISAdmin] = useState(false);
+  useEffect(() => {
+    axios.get('/auth/me')
+      .then(response => {
+        if (response.data.roles.includes("ADMIN")) {
+          setISAdmin(true);
+        }
+      })
+      .catch(error => {
+        console.error('Ошибка при получении данных:', error);
+      });
+  }, []);
+
 
   const productLoaderData = useLoaderData();
 
@@ -85,6 +100,7 @@ const Shop = () => {
           {productLoaderData.productsData.length !== 0 &&
             productLoaderData.productsData.map((product) => (
               <ProductElement
+               isAdmin={isAdmin}
                 key={nanoid()}
                 id={product._id}
                 title={product.name}

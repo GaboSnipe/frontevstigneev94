@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import axios from "../axios";
 import { nanoid } from "nanoid";
 
-const ProductList = () => {
+const OrderList = () => {
   const [subtotals, setSubtotals] = useState([]);
   const loginState = useSelector((state) => state.auth.isLoggedIn);
   const navigate = useNavigate();
@@ -252,4 +252,4 @@ const ProductList = () => {
   );
 };
 
-export default ProductList;
+export default OrderList;

@@ -64,7 +64,7 @@ const AdminPanel = () => {
     <div>
       <div className="navbar-bottom-menu">
         <div className="container d-flex justify-content-center align-items-center mt-5 text-2xl navlinks-container">
-          <NavLink className="btn bg-purple-600 hover:bg-purple-500 text-white btn-sm mx-2" to="/productlist">
+          <NavLink className="btn bg-purple-600 hover:bg-purple-500 text-white btn-sm mx-2" to="/shop">
             Товары
           </NavLink>
           <NavLink className="btn bg-purple-600 hover:bg-purple-500 text-white btn-sm mx-2" to="/userlist">

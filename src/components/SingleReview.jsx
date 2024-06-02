@@ -28,7 +28,6 @@ const SingleReview = ({ reviewObj, isAdmin, productData }) => {
   const rating = Array.from({ length: 5 }, (_, i) => {
     return i < reviewObj?.rating ? "full star" : "empty star";
   });
-console.log(userObj);
   return (
     <article className="mb-10">
         <div className="flex items-center mb-4">

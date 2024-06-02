@@ -17,7 +17,7 @@ import {
   About,
   UserList,
   OrderList,
-  ProductList
+  ProductCreate
 } from "./pages";
 import { landingLoader } from "./pages/Landing";
 import { singleProductLoader } from "./pages/SingleProduct";
@@ -93,8 +93,12 @@ const router = createBrowserRouter([
         element: <OrderList />
       },
       {
-        path:"productlist",
-        element: <ProductList />
+        path:"productcreate",
+        element: <ProductCreate />
+      },
+      {
+        path:"productcreate/:id",
+        element: <ProductCreate />
       }
     ],
   },

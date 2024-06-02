@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import FormInput from "./FormInput";
+import { useDispatch, useSelector } from "react-redux";
+
 import { Form, Link } from "react-router-dom";
 import FormRange from "./FormRange";
 import FormSelect from "./FormSelect";
@@ -13,6 +15,50 @@ const Filters = () => {
   const [selectCategoryList, setSelectCategoryList] = useState(["все"]);
   const [selectBrandList, setSelectBrandList] = useState(["все"]);
   const [maxPrice, setMaxPrice] = useState(1000000);
+  const [isAdmin, setISAdmin] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const loginState = useSelector((state) => state.auth.isLoggedIn);
+
+
+
+
+  const fetchWishlist = async () => {
+    let attempts = 0;
+    const maxAttempts = 3;
+
+    while (attempts < maxAttempts) {
+      if (loginState) {
+        try {
+          const getResponse = await axios.get(`/auth/me`);
+          
+          const userObj = getResponse.data;
+          if (getResponse.data.roles.includes("ADMIN")) {
+            setISAdmin(true);
+          }
+          setuserObj(userObj);
+          store.dispatch(updateWishlist({ userObj }));
+          store.dispatch(updateCart({ userObj }));
+          store.dispatch(calculateTotals({ userObj }));
+          return;
+        } catch (error) {
+          attempts += 1;
+          console.error(`Attempt ${attempts} failed:`, error);
+          if (attempts >= maxAttempts) {
+            console.error('Max attempts reached. Could not fetch wishlist.');
+          }
+        }
+      } else {
+        store.dispatch(clearWishlist());
+        return;
+      }
+    }
+  };
+  useEffect(() => {
+    setIsLoggedIn(loginState);
+    setISAdmin(false);
+    fetchWishlist();
+  }, [loginState]);
+
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -42,6 +88,8 @@ const Filters = () => {
       }
     };
 
+
+    
     fetchCategories();
     fetchBrands();
     fetchMaxPrice();
@@ -92,11 +140,15 @@ const Filters = () => {
         type="submit"
         className="btn bg-blue-600 hover:bg-blue-500 text-white btn-sm"
       >
-        поиск
+        Поиск
       </button>
       <Link to="/shop?page=1" className="btn btn-primary btn-sm">
-        сбросить
+        Сбросить
       </Link>
+      {isAdmin &&
+      <Link to="/productcreate" className="btn bg-green-500 text-white p-2 hover:bg-green-600 btn-sm">
+        Добавить товар
+      </Link> }
     </Form>
   );
 };
