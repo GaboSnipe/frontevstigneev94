@@ -8,7 +8,7 @@ import {
   CreateReviews
 } from "../components";
 import { FaHeart, FaCartShopping } from "react-icons/fa6";
-import { Link, useLoaderData } from "react-router-dom";
+import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import parse from "html-react-parser";
 import { nanoid } from "nanoid";
 import { useDispatch, useSelector } from "react-redux";
@@ -28,6 +28,7 @@ export const singleProductLoader = async ({ params }) => {
 };
 
 const SingleProduct = () => {
+  const navigate = useNavigate();
   const [currentImage, setCurrentImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [size, setSize] = useState(0);
@@ -70,6 +71,7 @@ const SingleProduct = () => {
       const response = await axios.delete(`/products/${productData._id}`);
       toast.success('Продукт успешно удален:');
       return true;
+      navigate("/");
     } catch (error) {
       toast.error('Ошибка при удалении продукта:', error);
       return false;

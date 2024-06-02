@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { addToCart } from "../features/cart/cartSlice";
 import { toast } from "react-toastify";
 import axios from "../axios";
 
 const ProductElement = ({ id, title, image, rating, price, brandName, isAdmin }) => {
+  const navigate = useNavigate();
+
   const isEditable = true;
   const product = {
     id, title, image, rating, price, brandName, amount: 1
@@ -20,6 +22,7 @@ const ProductElement = ({ id, title, image, rating, price, brandName, isAdmin })
       const response = await axios.delete(`/products/${id}`);
       toast.success('Продукт успешно удален:');
       return true;
+      navigate("/");
     } catch (error) {
       toast.error('Ошибка при удалении продукта:', error);
       return false;
