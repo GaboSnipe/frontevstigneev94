@@ -214,7 +214,7 @@ const SingleProduct = () => {
               }}
             >
               <FaCartShopping className="text-xl mr-1" />
-              добавить в корзину
+              Добавить в корзину
             </button>
 
             {product.isInWishList ? (
@@ -229,7 +229,7 @@ const SingleProduct = () => {
                 }}
               >
                 <FaHeart className="text-xl mr-1" />
-                удалить из списка желаный
+                Удалить из списка желаный
               </button>
             ) : (
               <button
@@ -243,7 +243,7 @@ const SingleProduct = () => {
                 }}
               >
                 <FaHeart className="text-xl mr-1" />
-                добавить в список желаный
+                Добавить в список желаный
               </button>
             )}
           </div>
@@ -289,7 +289,7 @@ const SingleProduct = () => {
               </div>
           <div className="other-product-info flex flex-col gap-x-2">
             <div className="badge bg-gray-700 badge-lg font-bold text-white p-5 mt-2">
-              производитель: {productData?.brandName}
+              Производитель: {productData?.brandName}
             </div>
             <div
               className={
@@ -298,16 +298,16 @@ const SingleProduct = () => {
                   : "badge bg-gray-700 badge-lg font-bold text-white p-5 mt-2"
               }
             >
-              наличие в складе : {productData?.isInStock ? "да" : "нет"}
+              Наличие в складе : {productData?.isInStock ? "да" : "нет"}
             </div>
             <div className="badge bg-gray-700 badge-lg font-bold text-white p-5 mt-2">
-              код продукта: {productData?.productCode}
+              Код продукта: {productData?.productCode}
             </div>
             <div className="badge bg-gray-700 badge-lg font-bold text-white p-5 mt-2">
-              категория: {productData?.category}
+              Категория: {productData?.category}
             </div>
             <div className="badge bg-gray-700 badge-lg font-bold text-white p-5 mt-2">
-              дата производство: {productData?.productionDate?.substring(0, 10)}
+              Дата производство: {productData?.productionDate?.substring(0, 10)}
             </div>
           </div>
         </div>

@@ -46,7 +46,7 @@ const Payd = forwardRef(({ onFormSubmit }, ref) => {
 
   const validateForm = () => {
     const { region, city, street, postalCode, fullName, phoneNumber, location } = formData;
-    if (!region || !city || !street || !postalCode || !fullName || !phoneNumber || !location) {
+    if (!region || !city || !street || !postalCode || !fullName || !phoneNumber) {
       toast.error("Все поля должны быть заполнены");
       return false;
     }

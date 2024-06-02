@@ -48,13 +48,13 @@ const OrderHistory = () => {
       {orders?.length === 0 ? (
         <div className="text-center">
           <h1 className="text-4xl text-accent-content">
-            у вас нету покупок в истории
+            У вас нету покупок в истории
           </h1>
           <Link
             to="/shop"
             className="btn bg-blue-600 hover:bg-blue-500 text-white mt-10"
           >
-            сделай свою первую покупку
+            Сделай свою первую покупку
           </Link>
         </div>
       ) : (
@@ -74,12 +74,12 @@ const OrderHistory = () => {
                   {/* head */}
                   <thead>
                     <tr className="text-accent-content">
-                      <th>покупка</th>
-                      <th>картинка</th>
-                      <th>имя</th>
-                      <th>тип</th>
-                      <th>количество</th>
-                      <th>цена</th>
+                      <th>Покупка</th>
+                      <th>Картинка</th>
+                      <th>Имя</th>
+                      <th>Тип</th>
+                      <th>Количество</th>
+                      <th>Цена</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -98,21 +98,21 @@ const OrderHistory = () => {
                     <tr>
                       <td colSpan="5" className="text-center">
                         <h4 className="text-md text-accent-content">
-                          цена: { Math.round(subtotals[index]) }
+                          Цена: { Math.round(subtotals[index]) }
                         </h4>
                       </td>
                     </tr>
                     <tr>
                       <td colSpan="5" className="text-center">
                         <h3 className="text-md text-accent-content">
-                          доставка: ₽{ Math.round(subtotals[index] / 20) }
+                          Доставка: ₽{ Math.round(subtotals[index] / 20) }
                         </h3>
                       </td>
                     </tr>
                     <tr>
                       <td colSpan="5" className="text-center">
                         <h3 className="text-xl text-accent-content">
-                          - итоговая цена: ₽{ Math.round(subtotals[index] + (subtotals[index] / 20)) } -
+                          - Итоговая цена: ₽{ Math.round(subtotals[index] + (subtotals[index] / 20)) } -
                         </h3>
                       </td>
                     </tr>

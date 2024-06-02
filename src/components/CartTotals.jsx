@@ -16,13 +16,13 @@ const CartTotals = () => {
         </p>
         {/* SHIPPING */}
         <p className='flex justify-between text-xs border-b border-base-300 pb-2 text-accent-content'>
-          <span>доставка</span>
+          <span>Доставка</span>
           <span className='font-medium'>₽{ shipping }</span>
         </p>
 
         {/* Order Total */}
         <p className='flex justify-between text-sm mt-4 pb-2 text-accent-content'>
-          <span>итоговая цена</span>
+          <span>Итоговая цена</span>
           <span className='font-medium'>₽{ Math.round(total + shipping) }</span>
         </p>
       </div>
