@@ -9,9 +9,9 @@ const Payfinal = ({ onSelectItem }) => {
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column' }}>
+    <div className='container' style={{ display: 'flex', flexDirection: 'column'}}>
       <div className="selected-products-grid mx-auto">
-        <div style={{ width: '18vw' }}>
+        <div style={{ width: '18vw', maxWidth: '400px'  }}>
         <img
           src={`https://backendevstigneev94.onrender.com/uploads/1.png`}
           onClick={() => handleImageSelect("СБП")}
@@ -24,7 +24,7 @@ const Payfinal = ({ onSelectItem }) => {
           }}
           />
         </div>
-        <div style={{ width: '18vw' }}>
+        <div style={{ width: '18vw', maxWidth: '400px'  }}>
           <img
             src={`https://backendevstigneev94.onrender.com/uploads/2.png`}
             onClick={() => handleImageSelect("Юмоней")}
@@ -39,7 +39,7 @@ const Payfinal = ({ onSelectItem }) => {
         </div>
       </div>
       <div className="selected-products-grid mx-auto">
-        <div style={{ width: '18vw' }}>
+        <div style={{ width: '18vw', maxWidth: '400px'  }}>
           <img
             src={`https://backendevstigneev94.onrender.com/uploads/3.png`}
             onClick={() => handleImageSelect("Банковская карта")}
@@ -52,7 +52,7 @@ const Payfinal = ({ onSelectItem }) => {
             }}
           />
         </div>
-        <div style={{ width: '18vw' }}>
+        <div style={{ width: '18vw', maxWidth: '400px'  }}>
           <img
             src={`https://backendevstigneev94.onrender.com/uploads/4.png`}
             onClick={() => handleImageSelect("Сбер пей")}

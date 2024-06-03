@@ -130,7 +130,7 @@ const OrderList = () => {
           >
             <input type="checkbox" name={`my-accordion-${index}`} />
             <div className="collapse-title text-xl font-medium text-accent-content">
-              Заказ {order._id} - {order.orderStatus}
+              Заказ {order?._id} - {order?.orderStatus}
             </div>
             <div className="collapse-content">
               <div className="overflow-x-auto">
@@ -150,12 +150,12 @@ const OrderList = () => {
                       <tr className="text-accent-content" key={nanoid()}>
                         <th>{counter + 1}</th>
                         <th>
-                          <img src={`https://backendevstigneev94.onrender.com${product.image}`} alt="" className="w-10" />
+                          <img src={`https://backendevstigneev94.onrender.com${product?.image}`} alt="" className="w-10" />
                         </th>
-                        <td>{product.title}</td>
-                        <td>{product.selectedSize}</td>
-                        <td>{product.amount}</td>
-                        <td>₽{(product.price * product.amount).toFixed(2)}</td>
+                        <td>{product?.title}</td>
+                        <td>{product?.selectedSize}</td>
+                        <td>{product?.amount}</td>
+                        <td>₽{(product?.price * product?.amount).toFixed(2)}</td>
                       </tr>
                     ))}
                     <tr>
@@ -188,41 +188,43 @@ const OrderList = () => {
                     </tr>
                     <tr>
                       <td colSpan="2">Имя:</td>
-                      <td colSpan="4">{order.formData.fullName}</td>
+                      <td colSpan="4">{order?.formData?.fullName}</td>
                     </tr>
                     <tr>
                       <td colSpan="2">Телефон:</td>
-                      <td colSpan="4">{order.formData.phoneNumber}</td>
+                      <td colSpan="4">{order?.formData?.phoneNumber}</td>
                     </tr>
                     <tr>
                       <td colSpan="2">Город:</td>
-                      <td colSpan="4">{order.formData.city}</td>
+                      <td colSpan="4">{order?.formData?.city}</td>
                     </tr>
                     <tr>
                       <td colSpan="2">Почтовый индекс:</td>
-                      <td colSpan="4">{order.formData.postalCode}</td>
+                      <td colSpan="4">{order?.formData?.postalCode}</td>
                     </tr>
                     <tr>
                       <td colSpan="2">Регион:</td>
-                      <td colSpan="4">{order.formData.region}</td>
+                      <td colSpan="4">{order?.formData?.region}</td>
                     </tr>
                     <tr>
                       <td colSpan="2">Улица:</td>
-                      <td colSpan="4">{order.formData.street}</td>
+                      <td colSpan="4">{order?.formData?.street}</td>
                     </tr>
                     <tr>
                       <td colSpan="2">Координаты:</td>
                       <td colSpan="4">
-                        Широта: {order.formData.location.lat}, Долгота: {order.formData.location.lng}
+                        Широта: {order?.formData?.location?.lat !== undefined ? order.formData.location.lat : 'не указано'}, 
+                        Долгота: {order?.formData?.location?.lng !== undefined ? order.formData.location.lng : 'не указано'}
                       </td>
+
                     </tr>
                     <tr>
                       <td colSpan="2">Выбранный метод оплаты:</td>
-                      <td colSpan="4">{order.selectedItem}</td>
+                      <td colSpan="4">{order?.selectedItem}</td>
                     </tr>
                     <tr>
                       <td colSpan="2">ID пользователя:</td>
-                      <td colSpan="4">{order.userId}</td>
+                      <td colSpan="4">{order?.userId}</td>
                     </tr>
                     {isAdmin && (
                       <tr>
@@ -230,7 +232,7 @@ const OrderList = () => {
                         <td colSpan="4">
                           <select
                             value={order.orderStatus}
-                            onChange={(e) => updateOrderStatus(order._id, e.target.value)}
+                            onChange={(e) => updateOrderStatus(order?._id, e.target.value)}
                             className="select select-bordered"
                           >
                             <option value="в процесе обработки">в процессе обработки</option>
