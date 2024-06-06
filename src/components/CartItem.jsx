@@ -84,7 +84,7 @@ const CartItem = ({ cartItem }) => {
       </div>
 
       {/* PRICE */}
-      <p className="font-medium sm:ml-auto text-accent-content">₽{(price * amount).toFixed(2)}</p>
+      <p className="font-medium sm:ml-auto text-accent-content">&#x20bd;{(price * amount).toFixed(2)}</p>
     </article>
   );
 };

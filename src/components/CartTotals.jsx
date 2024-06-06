@@ -12,18 +12,18 @@ const CartTotals = () => {
         {/* SUBTOTAL */}
         <p className='flex justify-between text-xs border-b border-base-300 pb-2 text-accent-content'>
           <span>Промежуточный итог</span>
-          <span className='font-medium'>₽{ Math.round(total) }</span>
+          <span className='font-medium'>&#x20bd;{ Math.round(total) }</span>
         </p>
         {/* SHIPPING */}
         <p className='flex justify-between text-xs border-b border-base-300 pb-2 text-accent-content'>
           <span>Доставка</span>
-          <span className='font-medium'>₽{ shipping }</span>
+          <span className='font-medium'>&#x20bd;{ shipping }</span>
         </p>
 
         {/* Order Total */}
         <p className='flex justify-between text-sm mt-4 pb-2 text-accent-content'>
           <span>Итоговая цена</span>
-          <span className='font-medium'>₽{ Math.round(total + shipping) }</span>
+          <span className='font-medium'>&#x20bd;{ Math.round(total + shipping) }</span>
         </p>
       </div>
     </div>

@@ -155,7 +155,7 @@ const OrderList = () => {
                         <td>{product?.title}</td>
                         <td>{product?.selectedSize}</td>
                         <td>{product?.amount}</td>
-                        <td>₽{(product?.price * product?.amount).toFixed(2)}</td>
+                        <td>&#x20bd;{(product?.price * product?.amount).toFixed(2)}</td>
                       </tr>
                     ))}
                     <tr>
@@ -168,14 +168,14 @@ const OrderList = () => {
                     <tr>
                       <td colSpan="5" className="text-center">
                         <h3 className="text-md text-accent-content">
-                          Доставка: ₽{Math.round(subtotals[index] / 20)}
+                          Доставка: &#x20bd;{Math.round(subtotals[index] / 20)}
                         </h3>
                       </td>
                     </tr>
                     <tr>
                       <td colSpan="5" className="text-center">
                         <h3 className="text-xl text-accent-content">
-                          Итоговая цена: ₽{Math.round(subtotals[index] + (subtotals[index] / 20))}
+                          Итоговая цена: &#x20bd;{Math.round(subtotals[index] + (subtotals[index] / 20))}
                         </h3>
                       </td>
                     </tr>

@@ -137,7 +137,7 @@ const Header = () => {
                     {amount} вещей
                   </span>
                   <span className="text-info text-accent-content">
-                    общая цена: ₽{total.toFixed(2)}
+                    общая цена: &#x20bd;{total.toFixed(2)}
                   </span>
                   <div className="card-actions">
                     <Link

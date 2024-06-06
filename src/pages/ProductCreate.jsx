@@ -21,6 +21,7 @@ const ProductCreate = () => {
   const [availableSizes, setAvailableSizes] = useState([]);
   const [size, setSize] = useState("");
   const dispatch = useDispatch();
+  
   const isAdmin = useSelector((state) => state.auth.user?.roles.includes("ADMIN"));
 
   const handleAddSize = () => {

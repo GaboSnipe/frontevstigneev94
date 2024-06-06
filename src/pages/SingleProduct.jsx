@@ -184,7 +184,7 @@ const SingleProduct = () => {
             {productData?.name}
           </h2>
           <SingleProductRating rating={rating} productData={productData} />
-            <p className="text-3xl text-error">₽{productData?.price}</p>
+            <p className="text-3xl text-error">&#x20bd;{productData?.price}</p>
           <div className="expandable-text">
             <p className={isExpanded ? 'expanded' : 'collapsed'}>
               {isExpanded ? productData?.description : `${productData?.description.substring(0, 200)}...`}

@@ -61,7 +61,7 @@ const ProductElement = ({ id, title, image, rating, price, brandName, isAdmin })
             </h3>
           </Link>
           <div className="flex items-center justify-between">
-            <span className="text-3xl font-bold text-accent-content">₽{price}</span>
+            <span className="text-3xl font-bold text-accent-content">&#x20bd;{price}</span>
             {isAdmin && (
               <>
                 <button

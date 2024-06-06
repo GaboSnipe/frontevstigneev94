@@ -18,6 +18,12 @@ const Cart = () => {
   const loginState = useSelector((state) => state.auth.isLoggedIn);
   const { cartItems, total } = useSelector((state) => state.cart); // Добавьте total из состояния Redux
 
+  useEffect(() => {
+        if (!loginState) {
+          navigate("/")
+        }
+  })
+
   const isCartEmpty = () => {
     if (cartItems.length === 0) {
       toast.error("Ваша корзина пуста");
