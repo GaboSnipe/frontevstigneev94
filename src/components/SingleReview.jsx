@@ -33,7 +33,7 @@ const SingleReview = ({ reviewObj, isAdmin, productData }) => {
         <div className="flex items-center mb-4">
           <img
             className="w-10 rounded-full"
-            src={`https://backendevstigneev94.onrender.com${userObj?.avatarUrl}`}
+            src={`https://backendevstigneev94-production.up.railway.app${userObj?.avatarUrl}`}
             alt=""
           />
             <div className="font-medium dark:text-white flex items-center">

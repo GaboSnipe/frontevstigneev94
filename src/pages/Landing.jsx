@@ -53,7 +53,7 @@ const Landing = () => {
                 key={product._id}
                 id={product._id}
                 title={product.name}
-                image={`https://backendevstigneev94.onrender.com${product.imageUrl}`}
+                image={`https://backendevstigneev94-production.up.railway.app${product.imageUrl}`}
                 price={product.price}
               />
             ))}

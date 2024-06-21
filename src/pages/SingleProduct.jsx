@@ -163,14 +163,14 @@ const SingleProduct = () => {
       <div className="grid grid-cols-2 max-w-7xl mx-auto mt-5 max-lg:grid-cols-1 max-lg:mx-5">
         <div className="product-images flex flex-col justify-center max-lg:justify-start">
           <img
-            src={`https://backendevstigneev94.onrender.com${productData?.additionalImageUrls[currentImage]}`}
+            src={`https://backendevstigneev94-production.up.railway.app${productData?.additionalImageUrls[currentImage]}`}
             className="w-96 text-center border border-gray-600 cursor-pointer"
             alt={productData.name}
           />
           <div className="other-product-images mt-1 grid grid-cols-3 w-96 gap-y-1 gap-x-2 max-sm:grid-cols-2 max-sm:w-64">
             {productData?.additionalImageUrls.map((imageObj, index) => (
               <img
-                src={`https://backendevstigneev94.onrender.com${imageObj}`}
+                src={`https://backendevstigneev94-production.up.railway.app${imageObj}`}
                 key={nanoid()}
                 onClick={() => setCurrentImage(index)}
                 alt={productData.name}

@@ -233,7 +233,7 @@ const ProductCreate = () => {
               onChange={handleImageUpload}
               className="mt-1 block w-full border-white-300 rounded-md shadow-sm"
             />
-            {imageUrl && <img src={`https://backendevstigneev94.onrender.com${imageUrl}`} alt="Main product" className="mt-2 w-32 border border-white-600" />}
+            {imageUrl && <img src={`https://backendevstigneev94-production.up.railway.app${imageUrl}`} alt="Main product" className="mt-2 w-32 border border-white-600" />}
           </div>
           <div>
             <label htmlFor="additionalImageUpload" className="block text-xl font-medium text-white-700">Дополнительные изображения</label>
@@ -246,7 +246,7 @@ const ProductCreate = () => {
             <div className="mt-2 flex flex-wrap gap-2">
               {additionalImageUrls.map((url, index) => (
                 <div key={index} className="relative">
-                  <img src={`https://backendevstigneev94.onrender.com${url}`} alt={`product-${index}`} className="w-32 border border-white-600" />
+                  <img src={`https://backendevstigneev94-production.up.railway.app${url}`} alt={`product-${index}`} className="w-32 border border-white-600" />
                   <button
                     type="button"
                     onClick={() => handleRemoveImage(index)}

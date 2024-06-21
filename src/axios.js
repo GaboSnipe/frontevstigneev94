@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-    baseURL: 'https://backendevstigneev94.onrender.com',
+    baseURL: 'https://backendevstigneev94-production.up.railway.app',
 });
 
 instance.interceptors.request.use((config)=>{

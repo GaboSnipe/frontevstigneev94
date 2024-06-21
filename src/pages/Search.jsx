@@ -93,7 +93,7 @@ const Search = () => {
               key={nanoid()}
               id={product._id}
               title={product.name}
-              image={`https://backendevstigneev94.onrender.com${product.imageUrl}`}
+              image={`https://backendevstigneev94-production.up.railway.app${product.imageUrl}`}
               rating={product.rating}
               price={product.price}
               brandName={product.brandName}
