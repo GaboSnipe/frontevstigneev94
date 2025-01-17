@@ -150,7 +150,7 @@ const OrderList = () => {
                       <tr className="text-accent-content" key={nanoid()}>
                         <th>{counter + 1}</th>
                         <th>
-                          <img src={`https://backendevstigneev94-production.up.railway.app${product?.image}`} alt="" className="w-10" />
+                          <img src={`https://https://backendevstigneev94.onrender.com${product?.image}`} alt="" className="w-10" />
                         </th>
                         <td>{product?.title}</td>
                         <td>{product?.selectedSize}</td>

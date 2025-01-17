@@ -104,7 +104,7 @@ const Shop = () => {
                 key={nanoid()}
                 id={product._id}
                 title={product.name}
-                image={`https://backendevstigneev94-production.up.railway.app${product.imageUrl}`}
+                image={`https://https://backendevstigneev94.onrender.com${product.imageUrl}`}
                 rating={product.rating}
                 price={product.price}
                 brandName={product.brandName}

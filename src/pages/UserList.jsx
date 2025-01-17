@@ -140,7 +140,7 @@ const UserList = () => {
                   <tbody>
                     <tr className="text-accent-content" key={nanoid()}>
                       <td>
-                        <img src={`https://backendevstigneev94-production.up.railway.app${user.avatarUrl}`} alt="avatar" className="w-10 h-10 rounded-full" />
+                        <img src={`https://https://backendevstigneev94.onrender.com${user.avatarUrl}`} alt="avatar" className="w-10 h-10 rounded-full" />
                       </td>
                       <td>{user.name}</td>
                       <td>{user.lastname}</td>
