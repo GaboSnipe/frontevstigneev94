@@ -11,7 +11,7 @@ Please note that a full exploration of this application’s features requires a 
 # Project Preview
 
 You can preview the frontevstigneev94 project deployed on Vercel by visiting the following link:
-[Preview the Project](https://frontevstigneev94-7qmkf00dh-gabos-projects-936e8025.vercel.app/)
+[Preview the Project](https://frontevstigneev94.vercel.app/)
 
 - example user
 - ``` email: admin@admin.com```
